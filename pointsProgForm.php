@@ -155,7 +155,7 @@
                     // Loop through each row in the result set
                     while ($vendor = mysqli_fetch_array($all_vendors, MYSQLI_ASSOC)) {
                         // Check if the vendor type is "grocery"
-                        if ($vendor['vendorType'] == "grocery") {
+                        if ($vendor['vendorType'] == "grocery" || "Grocery") {
                             echo '<label for="'. $vendor['vendorName'] .'">'. $vendor['vendorName'] .' <span style="color: red;">*</span></label>';
                             echo '<select name="grocery[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
