@@ -1,7 +1,6 @@
 <?php
 session_cache_expire(30);
 session_start();
-require_once('header.php');
 require_once('include/input-validation.php');
 
 ?>
@@ -60,8 +59,7 @@ require_once('include/input-validation.php');
 
 ?>
 <h1>Modify Family Status</h1>
-<main class="modify-status-form">
-    <form class="modify-status-form" method="post">
+<form id="modify-status-form" class="general" method="post">
         <h2>Modify Status</h2>
         <p> Child name is: <?php echo $person->get_first_name() . " ". $person->get_last_name()?></p>
         <p> Current family status is <?php echo $person->get_status()?> </p>
