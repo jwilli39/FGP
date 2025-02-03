@@ -63,33 +63,57 @@ require_once('include/input-validation.php');
         <h2>Modify Status</h2>
         <p> Child name is: <?php echo $person->get_first_name() . " ". $person->get_last_name()?></p>
         <p> Current family status is <?php echo $person->get_status()?> </p>
-        
-        <label name="status"> Select the family status you want to change to (required) </label>
-        <select name="status" id="status" required>
-            <option value="Active"> Active </option>
-            <option value="Remission"> Remission </option>
-            <option value="Survivor"> Survivor </option>
-            <option value="Stargazer"> Stargazer </option>
-        </select>
-        <h4> Please fill out the relevent fields for the new status where applicable.</h4>
-        <fieldset>
-            <legend> Remission Modification Fields </legend>
-            <label for="remission_trans_date"> Remission Transition Date</label>
-            <input type="date" name="remission_trans_date">
+        <?php
+// Fetch the status from the database
+$statusFromDB = $person->get_status(); // Retrieve the stored status
+?>
 
-        </fieldset>
-        
-        <fieldset>
-            <legend> Stargazer Modification Fields </legend>
-            <label for="remembrance_date"> Remembrance Date</label>
-            <input type="date" name="remembrance_date" >
+<label for="status">Select the family status you want to change to (required)</label>
+<select name="status" id="status" required onchange="toggleFields()">
+    <option value="Active" <?php if($statusFromDB == "Active") echo "selected"; ?>>Active</option>
+    <option value="Remission" <?php if($statusFromDB == "Remission") echo "selected"; ?>>Remission</option>
+    <option value="Survivor" <?php if($statusFromDB == "Survivor") echo "selected"; ?>>Survivor</option>
+    <option value="Stargazer" <?php if($statusFromDB == "Stargazer") echo "selected"; ?>>Stargazer</option>
+</select>
 
-            <label for="remembrance_wishes"> Remembrance Wishes</label>
-            <input type="text" name="remembrance_wishes" placeholder="Enter wishes">
-        </fieldset>
+<br>
 
-    <button type="submit">Submit</button>
-    <a class="button cancel" href="viewFamilyAccounts.php">Cancel</a>
-  </form>
+<fieldset id="remissionFields" style="display: none;">
+    <legend>Remission Modification Fields</legend>
+    <label for="remission_trans_date">Remission Transition Date</label>
+    <input type="date" name="remission_trans_date">
+</fieldset>
+
+<fieldset id="stargazerFields" style="display: none;">
+    <legend>Stargazer Modification Fields</legend>
+    <label for="remembrance_date">Remembrance Date</label>
+    <input type="date" name="remembrance_date">
+
+    <label for="remembrance_wishes">Remembrance Wishes</label>
+    <input type="text" name="remembrance_wishes" placeholder="Enter wishes">
+</fieldset>
+
+<button type="submit">Submit</button>
+<a class="button cancel" href="viewFamilyAccounts.php">Cancel</a>
+</form>
 </body>
 </html>
+
+<script>
+function toggleFields() {
+    var status = document.getElementById("status").value;
+    var remissionFields = document.getElementById("remissionFields");
+    var stargazerFields = document.getElementById("stargazerFields");
+
+    // Hide all fieldsets by default
+    remissionFields.style.display = "none";
+    stargazerFields.style.display = "none";
+
+    // Show relevant fieldset based on selected status
+    if (status === "Remission") {
+        remissionFields.style.display = "block";
+    } else if (status === "Stargazer") {
+        stargazerFields.style.display = "block";
+    }
+}
+</script>
