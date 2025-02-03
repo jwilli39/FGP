@@ -1,9 +1,8 @@
 <?php
 session_cache_expire(30);
 session_start();
-
+require_once('header.php');
 require_once('include/input-validation.php');
-
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +68,6 @@ require_once('include/input-validation.php');
         
         <label name="status"> Select the family status you want to change to (required) </label>
         <select name="status" id="status" required>
-            <option value="select"> Select a Status </option>
             <option value="Active"> Active </option>
             <option value="Remission"> Remission </option>
             <option value="Survivor"> Survivor </option>
@@ -93,8 +91,7 @@ require_once('include/input-validation.php');
         </fieldset>
 
     <button type="submit">Submit</button>
-</form>
-
-<?php require_once('universal.inc'); ?>
+    <a class="button cancel" href="viewFamilyAccounts.php">Cancel</a>
+  </form>
 </body>
 </html>
