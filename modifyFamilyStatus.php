@@ -6,10 +6,12 @@ require_once('include/input-validation.php');
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?php require_once('universal.inc'); ?>
     <title>FGP|Modify Family Status</title>
 </head>
+
 <body>
     <?php
         require_once('header.php');
@@ -24,7 +26,17 @@ require_once('include/input-validation.php');
     if (!$person) {
         die("Database query failed.");
     }
-    
+
+    // Fetch the remission date from the database
+    $remissionDateFromDB = $person->get_remission_trans_date();
+
+    // Fetch the remission date from the database
+    $remissionEndDateFromDB = $person->get_remission_end_date();
+
+// Ensure the date is properly formatted for <input type="date">
+$remissionDateFormatted = (!empty($remissionDateFromDB) && $remissionDateFromDB !== "0000-00-00") 
+    ? date('Y-m-d', strtotime($remissionDateFromDB)) 
+    : ''; 
 
     // Check if the form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -42,6 +54,11 @@ require_once('include/input-validation.php');
             update_remission_trans_date($person->get_id(), $remission_trans_date);
         }
 
+        if(isset($args['remission_end_date'])){
+            $remission_end_date = $args['remission_end_date'];
+            update_remission_end_date($person->get_id(), $remission_end_date);
+        }
+        
         if(isset($args['remembrance_date'])){
             $remembrance_date=$args['remembrance_date'];
             update_remembrance_date($person->get_id(), $remembrance_date);
@@ -58,8 +75,8 @@ require_once('include/input-validation.php');
 
 
 ?>
-<h1>Modify Family Status</h1>
-<form id="modify-status-form" class="general" method="post">
+    <h1>Modify Family Status</h1>
+    <form id="modify-status-form" class="general" method="post">
         <h2>Modify Status</h2>
         <p> Child name is: <?php echo $person->get_first_name() . " ". $person->get_last_name()?></p>
         <p> Current family status is <?php echo $person->get_status()?> </p>
@@ -68,35 +85,42 @@ require_once('include/input-validation.php');
 $statusFromDB = $person->get_status(); // Retrieve the stored status
 ?>
 
-<label for="status">Select the family status you want to change to (required)</label>
-<select name="status" id="status" required onchange="toggleFields()">
-    <option value="Active" <?php if($statusFromDB == "Active") echo "selected"; ?>>Active</option>
-    <option value="Remission" <?php if($statusFromDB == "Remission") echo "selected"; ?>>Remission</option>
-    <option value="Survivor" <?php if($statusFromDB == "Survivor") echo "selected"; ?>>Survivor</option>
-    <option value="Stargazer" <?php if($statusFromDB == "Stargazer") echo "selected"; ?>>Stargazer</option>
-</select>
+        <label for="status">Select the family status you want to change to (required)</label>
+        <select name="status" id="status" required onchange="toggleFields()">
+            <option value="Active" <?php if($statusFromDB == "Active") echo "selected"; ?>>Active</option>
+            <option value="Remission" <?php if($statusFromDB == "Remission") echo "selected"; ?>>Remission</option>
+            <option value="Survivor" <?php if($statusFromDB == "Survivor") echo "selected"; ?>>Survivor</option>
+            <option value="Stargazer" <?php if($statusFromDB == "Stargazer") echo "selected"; ?>>Stargazer</option>
+        </select>
 
-<br>
+        <fieldset id="remissionFields" style="display: none;">
+            <legend>Remission Modification Fields</legend>
+            <label for="remission_trans_date">Remission Transition Date</label>
+            <input type="date" name="remission_trans_date" id="remission_trans_date"
+                value="<?php echo !empty($remissionDateFromDB) ? date('Y-m-d', strtotime($remissionDateFromDB)) : ''; ?>"
+                required>
 
-<fieldset id="remissionFields" style="display: none;">
-    <legend>Remission Modification Fields</legend>
-    <label for="remission_trans_date">Remission Transition Date</label>
-    <input type="date" name="remission_trans_date">
-</fieldset>
+            <label for="remission_end_date">Remission End Date</label>
+            <input type="date" name="remission_end_date" id="remission_end_date"
+                value="<?php echo !empty($remissionEndDateFromDB) ? date('Y-m-d', strtotime($remissionEndDateFromDB)) : ''; ?>"
+                required>
 
-<fieldset id="stargazerFields" style="display: none;">
-    <legend>Stargazer Modification Fields</legend>
-    <label for="remembrance_date">Remembrance Date</label>
-    <input type="date" name="remembrance_date">
+        </fieldset>
 
-    <label for="remembrance_wishes">Remembrance Wishes</label>
-    <input type="text" name="remembrance_wishes" placeholder="Enter wishes">
-</fieldset>
+        <fieldset id="stargazerFields" style="display: none;">
+            <legend>Stargazer Modification Fields</legend>
+            <label for="remembrance_date">Remembrance Date</label>
+            <input type="date" name="remembrance_date">
 
-<button type="submit">Submit</button>
-<a class="button cancel" href="viewFamilyAccounts.php">Cancel</a>
-</form>
+            <label for="remembrance_wishes">Remembrance Wishes</label>
+            <input type="text" name="remembrance_wishes" placeholder="Enter wishes">
+        </fieldset>
+
+        <button type="submit">Submit</button>
+        <a class="button cancel" href="viewFamilyAccounts.php">Cancel</a>
+    </form>
 </body>
+
 </html>
 
 <script>
@@ -116,4 +140,6 @@ function toggleFields() {
         stargazerFields.style.display = "block";
     }
 }
+
+document.addEventListener("DOMContentLoaded", toggleFields);
 </script>

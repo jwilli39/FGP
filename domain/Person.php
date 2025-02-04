@@ -361,7 +361,7 @@ class Person {
 
 	function get_status() {
 		$today=date("YYYY-MM-DD");
-		if($this->remission_end_date>=$today && $this->status=="Remission"){
+		if($today > $this->remission_end_date && $this->status=="Remission"){
 			return "Survivor";
 		}
 		else if($this->status=="Survivor"){
@@ -592,6 +592,4 @@ function update_person($person) {
     $result = mysqli_query($con, $query);
     return $result; // Return true if update is successful, false otherwise
 }
-
-
 }

@@ -1101,19 +1101,31 @@ function find_user_names($name) {
 
     //updates resmission transition date and sets remission end date to be 1 year after remission trans date
     function update_remission_trans_date($id, $date) {
-        $con=connect();
+        $con = connect();
+    
+        // Update the remission transition date
         $query = 'UPDATE dbPersons SET remission_trans_date = "' . $date . '" WHERE id = "' . $id . '"';
-        $result = mysqli_query($con,$query);
-        $dateObj=new DateTimeImmutable($date);
-        $new_date=$dateObj->add(new DateInterval('P1Y'));
-        $date_final=$new_date->format("Y-m-d");
-        //date_add($dateObj,date_interval_create_from_date_string("1year"));
-        $query = 'UPDATE dbPersons SET remission_end_date = "' . $date_final . '" WHERE id = "' . $id . '"';
-        $result = mysqli_query($con,$query);
+        $result = mysqli_query($con, $query);
+    
         mysqli_close($con);
         return $result;
     }
+    
 
+    // updates the remission end date 
+    function update_remission_end_date($id, $remission_end_date) {
+        $con = connect();
+    
+        // Update the remission end date
+        $query = 'UPDATE dbPersons SET remission_end_date = "' . $remission_end_date . '" WHERE id = "' . $id . '"';
+        $result = mysqli_query($con, $query);
+    
+        mysqli_close($con);
+        return $result;
+    }
+    
+
+    
     function update_remembrance_date($id, $date) {
         $con=connect();
         $query = 'UPDATE dbPersons SET remembrance_date = "' . $date . '" WHERE id = "' . $id . '"';
