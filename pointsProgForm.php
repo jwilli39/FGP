@@ -56,6 +56,13 @@
     $sql = "SELECT * FROM `dbGiftCardVendors`";
     $all_vendors = mysqli_query($con,$sql);
 
+    // Fetch all gift cards for grocery vendors
+    $sql_grocery = "SELECT * FROM `dbGiftCardVendors` where vendorType = 'grocery'";
+    $grocery_vendors = mysqli_query($con,$sql_grocery);
+
+    // Fetch all gift cards for gas vendors
+    $sql_gas = "SELECT * FROM `dbGiftCardVendors` where vendorType = 'gas'";
+    $gas_vendors = mysqli_query($con,$sql_gas);
 ?>
 <!DOCTYPE html>
 <html>
@@ -151,11 +158,9 @@
                 </p>
                 <?php
                 // Check if there are any vendors
-                if (mysqli_num_rows($all_vendors) > 0) {
+                if (mysqli_num_rows($grocery_vendors) > 0) {
                     // Loop through each row in the result set
-                    while ($vendor = mysqli_fetch_array($all_vendors, MYSQLI_ASSOC)) {
-                        // Check if the vendor type is "grocery"
-                        if ($vendor['vendorType'] == "grocery" || "Grocery") {
+                    while ($vendor = mysqli_fetch_array($grocery_vendors, MYSQLI_ASSOC)) {
                             echo '<label for="'. $vendor['vendorName'] .'">'. $vendor['vendorName'] .' <span style="color: red;">*</span></label>';
                             echo '<select name="grocery[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
@@ -166,7 +171,6 @@
                                 $numCards++;
                             }
                             echo '</select>';
-                        }
                     }
                 } else {
                         // Handle case when there are no vendors
@@ -178,15 +182,10 @@
                 <label for="name">Gas Gift Cards</label>
                 <p> Please select the gas gift cards you would like.</p>
                 <?php
-                // reset vendors array collection
-                $sql = "SELECT * FROM `dbGiftCardVendors`";
-                $all_vendors = mysqli_query($con,$sql);
                 // Check if there are any vendors
-                if (mysqli_num_rows($all_vendors) > 0) {
+                if (mysqli_num_rows($gas_vendors) > 0) {
                     // Loop through each row in the result set
-                    while ($vendor = mysqli_fetch_array($all_vendors, MYSQLI_ASSOC)) {
-                        // Check if the vendor type is "gas"
-                        if ($vendor['vendorType'] == "gas") {
+                    while ($vendor = mysqli_fetch_array($gas_vendors, MYSQLI_ASSOC)) {
                             echo '<label for="'. $vendor['vendorName'] .'">'. $vendor['vendorName'] .' <span style="color: red;">*</span></label>';
                             echo '<select name="gas[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
@@ -197,7 +196,6 @@
                                 $numCards++;
                             }
                             echo '</select>';
-                        }
                     }
                 } else {
                         // Handle case when there are no vendors
