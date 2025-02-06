@@ -360,17 +360,16 @@ class Person {
 	}
 
 	function get_status() {
-		$today=date("YYYY-MM-DD");
-		if($this->remission_end_date>=$today && $this->status=="Remission"){
+		$today = date("Y-m-d"); // Correct date format
+		if ($today < $this->remission_end_date && $this->status == "Remission") {
+			return "Remission"; // Ensure the patient remains in remission if today is before or on the remission_end_date
+		} 
+		if ($today >= $this->remission_end_date && $this->status == "Remission") {
 			return "Survivor";
-		}
-		else if($this->status=="Survivor"){
-			return $this->status;
-		}
-		else{
-			return $this->status;
-		}
+		} 
+		return $this->status;
 	}
+	
 
 	function get_availability() { // array of day:hours:venue
 		return $this->availability;
@@ -592,6 +591,4 @@ function update_person($person) {
     $result = mysqli_query($con, $query);
     return $result; // Return true if update is successful, false otherwise
 }
-
-
 }
