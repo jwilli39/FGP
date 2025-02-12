@@ -9,13 +9,11 @@
     $userID = null;
     $isAdmin = false;
 
-    // [1]... the user is not logged in (access level is less the 1)
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
         header('Location: login.php');
         die();
     }
 
-    // [2]... the user is 
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
         // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
@@ -95,7 +93,7 @@
             <label>ID</label>
             <p><?php echo $person->get_id(); ?></p>
             <label>Forms</label>
-            <a href="viewPointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
+            <a href="pointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
             <a href=commCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package Form</a>
             <label>Address</label>
             <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?></p>
