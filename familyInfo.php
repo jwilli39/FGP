@@ -8,21 +8,25 @@
     $accessLevel = 0;
     $userID = null;
     $isAdmin = false;
+
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
         header('Location: login.php');
         die();
     }
+
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
         // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
         $accessLevel = $_SESSION['access_level'];
         $isAdmin = $accessLevel >= 2;
-        $userID = $_SESSION['_id'];
+        $userID = $_SESSION['_id'];        
     } 
+
     else {
         header('Location: login.php');
         die();
     }
+
     if ($isAdmin && isset($_GET['id'])) {
         require_once('include/input-validation.php');
         $args = sanitize($_GET);
@@ -30,9 +34,7 @@
     } else {
         $id = $userID; // Use session ID if no ID provided in GET parameters
     }
-
     
-
     require_once('database/dbPersons.php');
     // Check if status and contact_id are provided
     if (isset($_GET['status'])) {
@@ -54,16 +56,16 @@
     // Get the dbPersons information of the family in the get request so we can display all their information
     $person = retrieve_person($id);
 
-
-
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?php require_once('universal.inc') ?>
     <link rel="stylesheet" type="text/css" href="css/familyInfo.css">
     <title>FGP | <?php echo $person->get_first_name() . ' ' . $person->get_last_name(); ?></title>
 </head>
+
 <body>
     <?php require_once('header.php'); ?>
     <h1><?php echo $person->get_first_name() . '\'s Information'; ?></h1>
@@ -89,10 +91,12 @@
             <label>ID</label>
             <p><?php echo $person->get_id(); ?></p>
             <label>Forms</label>
-            <a href="viewPointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
-            <a href="viewFamilyCommCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package Form</a>
+            <a href="pointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
+            <a href=commCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package
+                Form</a>
             <label>Address</label>
-            <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?></p>
+            <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?>
+            </p>
             <label>Phone 1</label>
             <p><?php echo $person->get_phone1(); ?></p>
             <label>Birthday</label>
@@ -165,4 +169,5 @@
     </main>
 
 </body>
+
 </html>
