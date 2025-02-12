@@ -8,10 +8,14 @@
     $accessLevel = 0;
     $userID = null;
     $isAdmin = false;
+
+    // [1]... the user is not logged in (access level is less the 1)
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
         header('Location: login.php');
         die();
     }
+
+    // [2]... the user is 
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
         // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
@@ -19,10 +23,12 @@
         $isAdmin = $accessLevel >= 2;
         $userID = $_SESSION['_id'];
     } 
+
     else {
         header('Location: login.php');
         die();
     }
+
     if ($isAdmin && isset($_GET['id'])) {
         require_once('include/input-validation.php');
         $args = sanitize($_GET);
@@ -90,7 +96,7 @@
             <p><?php echo $person->get_id(); ?></p>
             <label>Forms</label>
             <a href="viewPointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
-            <a href="viewFamilyCommCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package Form</a>
+            <a href=commCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package Form</a>
             <label>Address</label>
             <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?></p>
             <label>Phone 1</label>
