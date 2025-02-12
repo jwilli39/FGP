@@ -61,7 +61,7 @@
             foreach ($people as $person) {
                 if ($person->get_access_level() < $_SESSION['access_level']) {
                     echo "<option value='{$person->get_id()}' data-name='{$person->get_first_name()} {$person->get_last_name()}' data-email='{$person->get_email()}' data-address='{$person->get_address()}'>";
-                    echo "{$person->get_first_name()} {$person->get_last_name()} | {$person->get_email()} | {$person->get_address()}";
+                    echo "{$person->get_first_name()} ({$person->get_last_name()}) -- {$person->get_email()}";
                     echo "</option>";
                 }
             }

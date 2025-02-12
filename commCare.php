@@ -7,6 +7,7 @@
 
     require_once('include/input-validation.php');
 
+    
     // $loggedIn = false;
     // if (isset($_SESSION['change-password'])) {
     //     header('Location: changePassword.php');
