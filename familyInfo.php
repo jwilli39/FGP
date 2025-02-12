@@ -19,7 +19,7 @@
         // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
         $accessLevel = $_SESSION['access_level'];
         $isAdmin = $accessLevel >= 2;
-        $userID = $_SESSION['_id'];
+        $userID = $_SESSION['_id'];        
     } 
 
     else {
@@ -34,8 +34,7 @@
     } else {
         $id = $userID; // Use session ID if no ID provided in GET parameters
     }
-
-    
+    echo $userID;
 
     require_once('database/dbPersons.php');
     // Check if status and contact_id are provided
@@ -58,16 +57,16 @@
     // Get the dbPersons information of the family in the get request so we can display all their information
     $person = retrieve_person($id);
 
-
-
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?php require_once('universal.inc') ?>
     <link rel="stylesheet" type="text/css" href="css/familyInfo.css">
     <title>FGP | <?php echo $person->get_first_name() . ' ' . $person->get_last_name(); ?></title>
 </head>
+
 <body>
     <?php require_once('header.php'); ?>
     <h1><?php echo $person->get_first_name() . '\'s Information'; ?></h1>
@@ -94,9 +93,11 @@
             <p><?php echo $person->get_id(); ?></p>
             <label>Forms</label>
             <a href="pointsProg.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Points Program Form</a>
-            <a href=commCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package Form</a>
+            <a href=commCare.php?id=<?php echo $id?>" class="button" style="width: 30%;">View Community Care Package
+                Form</a>
             <label>Address</label>
-            <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?></p>
+            <p><?php echo $person->get_address() . ', ' . $person->get_city() . ', ' . $person->get_state() . ' ' . $person->get_zip() ?>
+            </p>
             <label>Phone 1</label>
             <p><?php echo $person->get_phone1(); ?></p>
             <label>Birthday</label>
@@ -169,4 +170,5 @@
     </main>
 
 </body>
+
 </html>

@@ -33,16 +33,48 @@
     //     $_SESSION['_id'] = "guest";
     //     header('Location: personEdit.php?id=new');
     // }
+    
+    $loggedIn = false;
+    $accessLevel = 0;
+    $userID = null;
+    $isAdmin = false;
 
+    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+        header('Location: login.php');
+        die();
+    }
+
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+        $accessLevel = $_SESSION['access_level'];
+        $isAdmin = $accessLevel >= 2;
+        $userID = $_SESSION['_id'];        
+    } 
+
+    else {
+        header('Location: login.php');
+        die();
+    }
+
+    if ($isAdmin && isset($_GET['id'])) {
+        require_once('include/input-validation.php');
+        $args = sanitize($_GET);
+        $id = strtolower($args['id']);
+    } else {
+        $id = $userID; // Use session ID if no ID provided in GET parameters
+    }
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <?php require_once('universal.inc'); ?>
-        <title>FGP | Points Program </title>
-    </head>
-    <body>
-        <?php
+
+<head>
+    <?php require_once('universal.inc'); ?>
+    <title>FGP | Points Program </title>
+</head>
+
+<body>
+    <?php
             require_once('header.php');
             require_once('domain/PointsProg.php');
             require_once('database/dbPointsProg.php');
@@ -211,5 +243,6 @@
                 require_once('pointsProgForm.php'); 
             }
         ?>
-    </body>
+</body>
+
 </html>
