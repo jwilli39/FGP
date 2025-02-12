@@ -34,8 +34,7 @@
     } else {
         $id = $userID; // Use session ID if no ID provided in GET parameters
     }
-    echo $userID;
-
+    
     require_once('database/dbPersons.php');
     // Check if status and contact_id are provided
     if (isset($_GET['status'])) {
