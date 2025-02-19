@@ -164,7 +164,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             </div>
 
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
-            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" required placeholder="Your answer">
+            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
 
             <label for="services_interested_in">What services are you interested in?</label>
             <p> This is not a guarentee of services. Service is dependent upon volunteer availability. </p>
