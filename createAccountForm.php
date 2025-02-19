@@ -62,6 +62,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 <option value="">Choose an option</option>
                 <option value="text">Text Message</option>
                 <option value="call">Phone Call</option>
+                <option value="call">Email</option>
             </select>
 
             <label for="phone">Phone Number</label>
