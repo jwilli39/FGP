@@ -166,9 +166,6 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
             <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
 
-            <label for="allergies">If you are interested in meals, are there any allergies or dietary restrictions?</label>
-            <input type="text" id="allergies" name="allergies" placeholder="Your answer">
-
             <label for="sibling_info">With our Adopt-A-Family program, volunteers send out monthly cards and gifts. 
             Please provide names and ages of siblings, along with any interests or hobbies your family may have.</label>
             <input type="text" id="sibling_info" name="sibling_info" placeholder="Your answer">
