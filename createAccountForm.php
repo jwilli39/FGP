@@ -166,47 +166,6 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
             <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
 
-            <label for="services_interested_in">What services are you interested in?</label>
-            <p> This is not a guarentee of services. Service is dependent upon volunteer availability. </p>
-            <ul>
-                
-            <li>
-            <input type="checkbox" id="meals" name="services[]" value='meals'>
-            Meals **Not available in Northern Neck </li>
-            
-            <li>
-            <input type="checkbox" id="housecleaning" name="services[]" value="housecleaning">
-            Professional House Cleaning **Not available in Northern Neck</li>
-
-            <li>
-            <input type="checkbox" id="lawncare" name="services[]" value="lawncare">
-            Lawn Care **Not available in Northern Neck</li> 
-            
-            <li>
-            <input type="checkbox" id="profphotos" name="services[]" value="profphotos">
-            Professional Photography</li>
-
-            <li>
-            <input type="checkbox" id="gascards" name="services[]" value="gascards">
-            Gas Cards</li>
-
-            <li>
-            <input type="checkbox" id="grocerycards"  name="services[]" value="grocerycards">
-            Grocery Cards</li>
-
-            <li>
-            <input type="checkbox" id="AAA" name="services[]" value="aaa">
-            AAA membership</li>
-
-            <li>
-            <input type="checkbox" id="socialevents" name="services[]" value="socialEvents">
-            Social Events</li>
-
-            <li>
-            <input type="checkbox" id="houseprojects" name="services[]"  value="houseProjects">
-            House Projects **Not available in Northern Neck</li>
-            </ul>
-
             <label for="allergies">If you are interested in meals, are there any allergies or dietary restrictions?</label>
             <input type="text" id="allergies" name="allergies" placeholder="Your answer">
 
