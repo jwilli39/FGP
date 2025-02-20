@@ -57,7 +57,7 @@
             $required = array('econtact-name','cmethod','phone','email',
                 'address', 'city', 'state', 'zip', 'first-name', 'last-name', 'birthdate',
                 'diagnosis','diagnosis_date','hospital','permission_to_confirm',
-                'services','agreement'
+                'agreement'
             );
 
             //process required fields, do input validation on some fields
