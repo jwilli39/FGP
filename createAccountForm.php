@@ -166,10 +166,6 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
             <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
 
-            <label for="sibling_info">With our Adopt-A-Family program, volunteers send out monthly cards and gifts. 
-            Please provide names and ages of siblings, along with any interests or hobbies your family may have.</label>
-            <input type="text" id="sibling_info" name="sibling_info" placeholder="Your answer">
-
             <label><em>* </em>Do we have permission to share your name and contact information with our service providers and partners?</label>
             <p> We will share your information with lawn service, Moms in Motion (provide assistance with the medicaid waiver which serves as a secondary insurance),
                  cleaners, and YMCA (you receive a membership through them). </p>
