@@ -61,7 +61,7 @@
             );
 
             //process required fields, do input validation on some fields
-            $services=$args['services'];
+            // $services=$args['services'];
             
             
             $errors = false;
