@@ -62,6 +62,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 <option value="">Choose an option</option>
                 <option value="text">Text Message</option>
                 <option value="call">Phone Call</option>
+                <option value="call">Email</option>
             </select>
 
             <label for="phone">Phone Number</label>
@@ -82,57 +83,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="state">State</label>
             
             <select id="state" name="state" required>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
                 <option value="VA" selected>Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
             </select>
 
             <label for="zip">Zip Code</label>
@@ -163,55 +114,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             </div>
 
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
-            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" required placeholder="Your answer">
-
-            <label for="services_interested_in">What services are you interested in?</label>
-            <p> This is not a guarentee of services. Service is dependent upon volunteer availability. </p>
-            <ul>
-                
-            <li>
-            <input type="checkbox" id="meals" name="services[]" value='meals'>
-            Meals **Not available in Northern Neck </li>
-            
-            <li>
-            <input type="checkbox" id="housecleaning" name="services[]" value="housecleaning">
-            Professional House Cleaning **Not available in Northern Neck</li>
-
-            <li>
-            <input type="checkbox" id="lawncare" name="services[]" value="lawncare">
-            Lawn Care **Not available in Northern Neck</li> 
-            
-            <li>
-            <input type="checkbox" id="profphotos" name="services[]" value="profphotos">
-            Professional Photography</li>
-
-            <li>
-            <input type="checkbox" id="gascards" name="services[]" value="gascards">
-            Gas Cards</li>
-
-            <li>
-            <input type="checkbox" id="grocerycards"  name="services[]" value="grocerycards">
-            Grocery Cards</li>
-
-            <li>
-            <input type="checkbox" id="AAA" name="services[]" value="aaa">
-            AAA membership</li>
-
-            <li>
-            <input type="checkbox" id="socialevents" name="services[]" value="socialEvents">
-            Social Events</li>
-
-            <li>
-            <input type="checkbox" id="houseprojects" name="services[]"  value="houseProjects">
-            House Projects **Not available in Northern Neck</li>
-            </ul>
-
-            <label for="allergies">If you are interested in meals, are there any allergies or dietary restrictions?</label>
-            <input type="text" id="allergies" name="allergies" placeholder="Your answer">
-
-            <label for="sibling_info">With our Adopt-A-Family program, volunteers send out monthly cards and gifts. 
-            Please provide names and ages of siblings, along with any interests or hobbies your family may have.</label>
-            <input type="text" id="sibling_info" name="sibling_info" placeholder="Your answer">
+            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
 
             <label><em>* </em>Do we have permission to share your name and contact information with our service providers and partners?</label>
             <p> We will share your information with lawn service, Moms in Motion (provide assistance with the medicaid waiver which serves as a secondary insurance),
