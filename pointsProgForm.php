@@ -103,7 +103,7 @@
         // Sanitize input, check for required fields
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "address", "freezer_meals", "allergies", "snacks", "snack_notes", "house_cleaning", "lawn_care",
+            "name", "address", "freezer_meals", "allergies", "snack_notes", "house_cleaning", "lawn_care",
             "AAA_membership", "photography", "house_projects", "financial_relief"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
