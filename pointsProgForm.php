@@ -216,21 +216,6 @@
                 <li><input type="text" name="otherAllergyText" placeholder="Enter other allergy"></li>
             </ul>
 
-            <label for="snacks">What types of snacks do you prefer? <span style="color: red;">*</span></label>
-            <p>We will do our best to accommodate. Please note that these are examples and not an all inclusive list.
-            </p>
-            <ul>
-                <li><input type="checkbox" id="crackers" name="snacks[]" value="crackers"> Crackers</li>
-                <li><input type="checkbox" id="cookies" name="snacks[]" value="cookies"> Cookies</li>
-                <li><input type="checkbox" id="chips" name="snacks[]" value="chips"> Chips</li>
-                <li><input type="checkbox" id="granolabars" name="snacks[]" value="granola bars"> Granola Bars</li>
-                <li><input type="checkbox" id="cereal" name="snacks[]" value="cereal"> Cereal</li>
-                <li><input type="checkbox" id="nuts" name="snacks[]" value="nuts"> Nuts</li>
-                <li><input type="checkbox" id="fruitsnacks" name="snacks[]" value="fruit snacks"> Fruit Snacks</li>
-                <li><input type="checkbox" id="otherSnack" name="otherSnack" value="other"> Other:</li>
-                <li><input type="text" name="otherSnackText" placeholder="Enter other snack"></li>
-            </ul>
-
             <label for="snack_notes">Are there any snacks that your child/children do not prefer or will not eat? Is
                 there anything else we should know when considering snacks for your family? </label>
             <input type="text" id="snack_notes" name="snack_notes" required placeholder="Your answer">
