@@ -288,12 +288,12 @@
                 <li><input type="radio" id="lawn_care_no" name="lawn_care" value=0 required> We do not want lawn care
                 </li>
             </ul>
-
             <label for="aaa_membership" required>Would you like a AAA Plus Membership? <span
                     style="color: red;">*</span></label>
             <ul>
                 <li><input type="radio" id="aaa_yes" name="aaa_membership" value=1 required> Yes</li>
                 <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> No</li>
+                <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> Already Have It</li>
             </ul>
 
             <p> If yes to AAA Membership, please provide the responsible party's name and date of birth. </p>
