@@ -215,11 +215,6 @@
                 <li><input type="checkbox" id="otherAllergy" name="otherAllergy" value="other"> Other:</li>
                 <li><input type="text" name="otherAllergyText" placeholder="Enter other allergy"></li>
             </ul>
-
-            <label for="snack_notes">Are there any snacks that your child/children do not prefer or will not eat? Is
-                there anything else we should know when considering snacks for your family? </label>
-            <input type="text" id="snack_notes" name="snack_notes" required placeholder="Your answer">
-            <br><br>
             <label for="name">Grocery Store Gift Cards </label>
             <p>We only offer gift cards from stores that allow us to
                 purchase the cards online. Shoppers Food Warehouse

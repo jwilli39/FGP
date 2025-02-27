@@ -86,7 +86,7 @@
                 $args = sanitize($_POST, $ignoreList);
                 $_SESSION['form_data'] = $args;
 
-                $required = array('name', 'email', 'address', 'freezer_meals', 'snack_notes',
+                $required = array('name', 'email', 'address', 'freezer_meals',
                 'house_cleaning', 'lawn_care', 'aaa_membership', 'photography', 
                 'house_projects', 'financial_relief'
                     //form requries these but they cannot be confirmed by computer
