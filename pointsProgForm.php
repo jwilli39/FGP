@@ -297,8 +297,8 @@
             <label for="aaa_membership" required>Would you like a AAA Plus Membership? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="aaa_yes" name="aaa_membership" value="Yes" required> Yes</li>
-                <li><input type="radio" id="aaa_no" name="aaa_membership" value="No" required> No</li>
+                <li><input type="radio" id="aaa_yes" name="aaa_membership" value=1 required> Yes</li>
+                <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> No</li>
             </ul>
 
             <p> If yes to AAA Membership, please provide the responsible party's name and date of birth. </p>
@@ -320,8 +320,8 @@
             <label for="photography" required>Are you interested in a photography session? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="photo_yes" name="photography" value="Yes" required> Yes</li>
-                <li><input type="radio" id="photo_no" name="photography" value="No" required> No</li>
+                <li><input type="radio" id="photo_yes" name="photography" value=1 required> Yes</li>
+                <li><input type="radio" id="photo_no" name="photography" value=0 required> No</li>
             </ul>
 
             <label for="add_services"> Additional Services </label>
@@ -331,17 +331,17 @@
             </p>
             <label for="house_projects" required>House Projects <span style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="house_more_info" name="house_projects" value="More info requested" required>
+                <li><input type="radio" id="house_more_info" name="house_projects" value=1 required>
                     We would like more information when available</li>
-                <li><input type="radio" id="house_not_interested" name="house_projects" value="Not interested" required>
+                <li><input type="radio" id="house_not_interested" name="house_projects" value=0 required>
                     We are not interested in house projects</li>
             </ul>
 
             <label for="financial_relief" required>Financial Relief <span style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="relief_more_info" name="financial_relief" value="More info requested"
+                <li><input type="radio" id="relief_more_info" name="financial_relief" value=1
                         required> We would like more information when available</li>
-                <li><input type="radio" id="relief_not_interested" name="financial_relief" value="Not interested"
+                <li><input type="radio" id="relief_not_interested" name="financial_relief" value=0
                         required> We are not interested in financial relief</li>
             </ul>
             <br>
