@@ -1,3 +1,3 @@
 DELETE FROM dbGiftCardVendors
-WHERE vendorName IN ('Gulf', 'Qwik Trip', 'Speedway', 'Marathon');
+WHERE vendorName IN ('Gulf', 'Kwik Trip', 'Speedway', 'Marathon');
 
