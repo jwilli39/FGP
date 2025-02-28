@@ -41,62 +41,6 @@
     
     require_once('database/dbPersons.php');
     
-    // Generates a dropdown menu of families. (When logged in as Admin)
-    // Only includes families with a lower access level than the current user.
-    function renderFamilyDropdown() {
-        global $db, $_SESSION;
-    
-        if ($_SESSION['access_level'] >= 2) {
-            // Admin: Show dropdown with sorted options
-            $people = getall_families();
-    
-            // Sort people alphabetically (case-insensitive)
-            usort($people, function($a, $b) {
-                return strcasecmp($a->get_first_name() . $a->get_last_name(), $b->get_first_name() . $b->get_last_name());
-            });
-    
-            echo '<select id="familyDropdown" name="family" onchange="fillForm()">';
-            echo '<option value="" data-name="" data-email="" data-address="">Select a person</option>'; // Default option
-    
-            foreach ($people as $person) {
-                if ($person->get_access_level() < $_SESSION['access_level']) {
-                    echo "<option value='{$person->get_id()}' data-name='{$person->get_first_name()} {$person->get_last_name()}' data-email='{$person->get_email()}' data-address='{$person->get_address()}'>";
-                    echo "{$person->get_first_name()} ({$person->get_last_name()}) -- {$person->get_email()}";
-                    echo "</option>";
-                }
-            }
-            echo '</select>';
-        }
-    }
-
-    // Auto fill the name, email, and address for points program form
-    // when logged in as a family account
-    function autoFillPointsFormFamily($userID) {
-        global $db, $_SESSION;
-    
-        if ($_SESSION['access_level'] == 1) {
-            $people = getall_families();
-    
-            foreach ($people as $person) {
-                if ($person->get_email() == $userID) { // Match user by email
-                    $fullName = "{$person->get_first_name()} {$person->get_last_name()}";
-                    $email = $person->get_email();
-                    $address = $person->get_address();
-    
-                    // Automatically set the values in the form
-                    echo "<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            document.getElementById('name').value = '" . addslashes($fullName) . "';
-                            document.getElementById('email').value = '" . addslashes($email) . "';
-                            document.getElementById('address').value = '" . addslashes($address) . "';
-                        });
-                    </script>";
-                    return; // Stop after setting the first match
-                }
-            }
-        }
-    }
-    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once('include/input-validation.php');
         require_once('database/dbPointsProg.php');
@@ -293,7 +237,7 @@
             <ul>
                 <li><input type="radio" id="aaa_yes" name="aaa_membership" value=1 required> Yes</li>
                 <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> No</li>
-                <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> Already Have It</li>
+                <li><input type="radio" id="aaa_already_have_it" name="aaa_membership" value=2 required> Already Have It</li>
             </ul>
 
             <p> If yes to AAA Membership, please provide the responsible party's name and date of birth. </p>
@@ -344,16 +288,5 @@
         </form>
 
     </main>
-    <script>
-    function fillForm() {
-        var dropdown = document.getElementById("familyDropdown");
-        var selectedOption = dropdown.options[dropdown.selectedIndex];
-
-        document.getElementById("name").value = selectedOption.getAttribute("data-name") || "";
-        document.getElementById("email").value = selectedOption.getAttribute("data-email") || "";
-        document.getElementById("address").value = selectedOption.getAttribute("data-address") || "";
-    }
-    </script>
 </body>
-
 </html>
