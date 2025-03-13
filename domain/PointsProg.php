@@ -24,12 +24,13 @@ class PointsProg {
     private $financial_relief;
     private $points_used;
     private $giftCardPickUp;
+    private $monthly_community_package;
 
     // Constructor
     public function __construct($id, $name, $email, $address, $freezer_meals, 
             $allergies, $snacks, $snack_notes, $grocery, $gas, $house_cleaning, $lawn_care, 
             $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
-            $photography, $house_projects, $financial_relief, $points_used, $giftCardPickUp) {
+            $photography, $house_projects, $financial_relief, $points_used, $giftCardPickUp, $monthly_community_package) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
@@ -50,6 +51,7 @@ class PointsProg {
         $this->financial_relief = $financial_relief;
         $this->points_used = $points_used;
         $this->giftCardPickUp = $giftCardPickUp;
+        $this->monthly_community_package = $monthly_community_package;
     }
 
     // Getters
@@ -131,5 +133,9 @@ class PointsProg {
 
     public function getGiftCardPickUp() {
         return $this->giftCardPickUp;
+    }
+
+    public function getMonthlyPackage() {
+        return $this->monthly_community_package;
     }
 }

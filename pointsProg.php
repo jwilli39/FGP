@@ -222,6 +222,8 @@
                 
                 $giftCardPickUp = '';
 
+                $monthly_community_package = isset($args['monthly_community_package']) ? $args['monthly_community_package'] : null;
+
                 // Make a new PointsProg instance
                 $newpointsprog = new PointsProg(
                     $id, $name, $email, $address, $freezer_meals, 
@@ -230,7 +232,7 @@
                     $house_cleaning, $lawn_care, 
                     $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
                     $photography, $house_projects, $financial_relief, $points_used,
-                    $giftCardPickUp
+                    $giftCardPickUp, $monthly_community_package
                 );
 
                 // Add it to the SQL table

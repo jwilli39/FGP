@@ -48,7 +48,7 @@
         $args = sanitize($_POST, null);
         $required = array(
             "name", "address", "freezer_meals", "allergies", "snack_notes", "house_cleaning", "lawn_care",
-            "AAA_membership", "photography", "house_projects", "financial_relief"
+            "AAA_membership", "photography", "house_projects", "financial_relief", "monthly_community_package"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
@@ -232,6 +232,19 @@
                 <li><input type="radio" id="lawn_care_no" name="lawn_care" value=0 required> We do not want lawn care
                 </li>
             </ul>
+
+
+
+            <label for="monthly_community_package">Would you like to receive a monthly community care package from a community member? 
+                <span style="color: red;">*</span>
+            </label>
+            <ul>
+                <li><input type="radio" id="pack_yes" name="monthly_community_package" value="yes" required> Yes</li>
+                <li><input type="radio" id="pack_no" name="monthly_community_package" value="no" required> No</li>
+            </ul>
+
+
+            
             <label for="aaa_membership" required>Would you like a AAA Plus Membership? <span
                     style="color: red;">*</span></label>
             <ul>

@@ -36,7 +36,8 @@ function add_points_prog($pointsprog) {
             house_projects = '" . $pointsprog->getHouseProjects() . "',
             financial_relief = '" . $pointsprog->getFinancialRelief() . "',
             points_used = '" . $pointsprog->getPointsUsed() . "',
-            giftCardPickUp = '" . $pointsprog->getGiftCardPickUp() . "'
+            giftCardPickUp = '" . $pointsprog->getGiftCardPickUp() . "',
+            monthly_community_package = '" . $pointsprog->getMonthlyPackage() . "' 
             WHERE email = '" . $pointsprog->getEmail() . "'
         ");
         mysqli_close($con);
@@ -67,7 +68,8 @@ function add_points_prog($pointsprog) {
                 $pointsprog->getHouseProjects() . '","' .
                 $pointsprog->getFinancialRelief() . '","' .
                 $pointsprog->getPointsUsed() . '","' .
-                $pointsprog->getGiftCardPickUp() .
+                $pointsprog->getGiftCardPickUp() . '","' .
+                $pointsprog->getMonthlyPackage() .
                 '");'
             );							
             mysqli_close($con);
