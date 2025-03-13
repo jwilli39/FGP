@@ -48,7 +48,7 @@
         $args = sanitize($_POST, null);
         $required = array(
             "name", "address", "freezer_meals", "allergies", "snack_notes", "house_cleaning", "lawn_care",
-            "AAA_membership", "photography", "house_projects", "financial_relief", "monthly_community_package"
+            "AAA_membership", "monthly_community_package"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
@@ -244,7 +244,7 @@
             </ul>
 
 
-            
+
             <label for="aaa_membership" required>Would you like a AAA Plus Membership? <span
                     style="color: red;">*</span></label>
             <ul>
@@ -262,40 +262,39 @@
             <input type="date" id="aaa_membership_dob" name="aaa_membership_dob" placeholder="Date of birth"
                 max="<?php echo date('Y-m-d'); ?>">
 
-            <label for="photography"> Photography </label>
-            <p>
-                We offer your family two sessions of photography.
-                We will do one during treatment and again after treatment has finished.
-                There is no charge to your points for this service.
-            </p>
 
-            <label for="photography" required>Are you interested in a photography session? <span
-                    style="color: red;">*</span></label>
-            <ul>
-                <li><input type="radio" id="photo_yes" name="photography" value=1 required> Yes</li>
-                <li><input type="radio" id="photo_no" name="photography" value=0 required> No</li>
-            </ul>
 
-            <label for="add_services"> Additional Services </label>
-            <p>
-                We currently offer to help with house projects and financial relief twice a year.
-                If you are interested we will contact you when these services become available
-            </p>
-            <label for="house_projects" required>House Projects <span style="color: red;">*</span></label>
-            <ul>
-                <li><input type="radio" id="house_more_info" name="house_projects" value=1 required>
-                    We would like more information when available</li>
-                <li><input type="radio" id="house_not_interested" name="house_projects" value=0 required>
-                    We are not interested in house projects</li>
-            </ul>
 
-            <label for="financial_relief" required>Financial Relief <span style="color: red;">*</span></label>
-            <ul>
-                <li><input type="radio" id="relief_more_info" name="financial_relief" value=1
-                        required> We would like more information when available</li>
-                <li><input type="radio" id="relief_not_interested" name="financial_relief" value=0
-                        required> We are not interested in financial relief</li>
-            </ul>
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <br>
             <input type="submit" name="form_data" value="Submit">
         </form>

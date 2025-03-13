@@ -19,9 +19,6 @@ class PointsProg {
     private $AAA_membership;
     private $AAA_membership_name;
     private $AAA_membership_DOB;
-    private $photography;
-    private $house_projects;
-    private $financial_relief;
     private $points_used;
     private $giftCardPickUp;
     private $monthly_community_package;
@@ -30,7 +27,7 @@ class PointsProg {
     public function __construct($id, $name, $email, $address, $freezer_meals, 
             $allergies, $snacks, $snack_notes, $grocery, $gas, $house_cleaning, $lawn_care, 
             $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
-            $photography, $house_projects, $financial_relief, $points_used, $giftCardPickUp, $monthly_community_package) {
+            $points_used, $giftCardPickUp, $monthly_community_package) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
@@ -46,9 +43,6 @@ class PointsProg {
         $this->AAA_membership = $AAA_membership;
         $this->AAA_membership_name = $AAA_membership_name;
         $this->AAA_membership_DOB = $AAA_membership_DOB;
-        $this->photography = $photography;
-        $this->house_projects = $house_projects;
-        $this->financial_relief = $financial_relief;
         $this->points_used = $points_used;
         $this->giftCardPickUp = $giftCardPickUp;
         $this->monthly_community_package = $monthly_community_package;
@@ -113,18 +107,6 @@ class PointsProg {
 
     public function getAAAMembershipDOB() {
         return $this->AAA_membership_DOB;
-    }
-
-    public function getPhotography() {
-        return $this->photography;
-    }
-
-    public function getHouseProjects() {
-        return $this->house_projects;
-    }
-
-    public function getFinancialRelief() {
-        return $this->financial_relief;
     }
 
     public function getPointsUsed() {
