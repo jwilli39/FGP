@@ -262,39 +262,6 @@
             <input type="date" id="aaa_membership_dob" name="aaa_membership_dob" placeholder="Date of birth"
                 max="<?php echo date('Y-m-d'); ?>">
 
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <br>
             <input type="submit" name="form_data" value="Submit">
         </form>
