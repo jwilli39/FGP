@@ -41,69 +41,13 @@
     
     require_once('database/dbPersons.php');
     
-    // Generates a dropdown menu of families. (When logged in as Admin)
-    // Only includes families with a lower access level than the current user.
-    function renderFamilyDropdown() {
-        global $db, $_SESSION;
-    
-        if ($_SESSION['access_level'] >= 2) {
-            // Admin: Show dropdown with sorted options
-            $people = getall_families();
-    
-            // Sort people alphabetically (case-insensitive)
-            usort($people, function($a, $b) {
-                return strcasecmp($a->get_first_name() . $a->get_last_name(), $b->get_first_name() . $b->get_last_name());
-            });
-    
-            echo '<select id="familyDropdown" name="family" onchange="fillForm()">';
-            echo '<option value="" data-name="" data-email="" data-address="">Select a person</option>'; // Default option
-    
-            foreach ($people as $person) {
-                if ($person->get_access_level() < $_SESSION['access_level']) {
-                    echo "<option value='{$person->get_id()}' data-name='{$person->get_first_name()} {$person->get_last_name()}' data-email='{$person->get_email()}' data-address='{$person->get_address()}'>";
-                    echo "{$person->get_first_name()} ({$person->get_last_name()}) -- {$person->get_email()}";
-                    echo "</option>";
-                }
-            }
-            echo '</select>';
-        }
-    }
-
-    // Auto fill the name, email, and address for points program form
-    // when logged in as a family account
-    function autoFillPointsFormFamily($userID) {
-        global $db, $_SESSION;
-    
-        if ($_SESSION['access_level'] == 1) {
-            $people = getall_families();
-    
-            foreach ($people as $person) {
-                if ($person->get_email() == $userID) { // Match user by email
-                    $fullName = "{$person->get_first_name()} {$person->get_last_name()}";
-                    $email = $person->get_email();
-                    $address = $person->get_address();
-    
-                    // Automatically set the values in the form
-                    echo "<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            document.getElementById('name').value = '" . addslashes($fullName) . "';
-                            document.getElementById('email').value = '" . addslashes($email) . "';
-                            document.getElementById('address').value = '" . addslashes($address) . "';
-                        });
-                    </script>";
-                    return; // Stop after setting the first match
-                }
-            }
-        }
-    }
-    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once('include/input-validation.php');
         require_once('database/dbPointsProg.php');
         // Sanitize input, check for required fields
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "address", "freezer_meals", "allergies", "snacks", "snack_notes", "house_cleaning", "lawn_care",
+            "name", "address", "freezer_meals", "allergies", "snack_notes", "house_cleaning", "lawn_care",
             "AAA_membership", "photography", "house_projects", "financial_relief"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -215,26 +159,6 @@
                 <li><input type="checkbox" id="otherAllergy" name="otherAllergy" value="other"> Other:</li>
                 <li><input type="text" name="otherAllergyText" placeholder="Enter other allergy"></li>
             </ul>
-
-            <label for="snacks">What types of snacks do you prefer? <span style="color: red;">*</span></label>
-            <p>We will do our best to accommodate. Please note that these are examples and not an all inclusive list.
-            </p>
-            <ul>
-                <li><input type="checkbox" id="crackers" name="snacks[]" value="crackers"> Crackers</li>
-                <li><input type="checkbox" id="cookies" name="snacks[]" value="cookies"> Cookies</li>
-                <li><input type="checkbox" id="chips" name="snacks[]" value="chips"> Chips</li>
-                <li><input type="checkbox" id="granolabars" name="snacks[]" value="granola bars"> Granola Bars</li>
-                <li><input type="checkbox" id="cereal" name="snacks[]" value="cereal"> Cereal</li>
-                <li><input type="checkbox" id="nuts" name="snacks[]" value="nuts"> Nuts</li>
-                <li><input type="checkbox" id="fruitsnacks" name="snacks[]" value="fruit snacks"> Fruit Snacks</li>
-                <li><input type="checkbox" id="otherSnack" name="otherSnack" value="other"> Other:</li>
-                <li><input type="text" name="otherSnackText" placeholder="Enter other snack"></li>
-            </ul>
-
-            <label for="snack_notes">Are there any snacks that your child/children do not prefer or will not eat? Is
-                there anything else we should know when considering snacks for your family? </label>
-            <input type="text" id="snack_notes" name="snack_notes" required placeholder="Your answer">
-            <br><br>
             <label for="name">Grocery Store Gift Cards </label>
             <p>We only offer gift cards from stores that allow us to
                 purchase the cards online. Shoppers Food Warehouse
@@ -308,12 +232,12 @@
                 <li><input type="radio" id="lawn_care_no" name="lawn_care" value=0 required> We do not want lawn care
                 </li>
             </ul>
-
             <label for="aaa_membership" required>Would you like a AAA Plus Membership? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="aaa_yes" name="aaa_membership" value="Yes" required> Yes</li>
-                <li><input type="radio" id="aaa_no" name="aaa_membership" value="No" required> No</li>
+                <li><input type="radio" id="aaa_yes" name="aaa_membership" value=1 required> Yes</li>
+                <li><input type="radio" id="aaa_no" name="aaa_membership" value=0 required> No</li>
+                <li><input type="radio" id="aaa_already_have_it" name="aaa_membership" value=2 required> Already Have It</li>
             </ul>
 
             <p> If yes to AAA Membership, please provide the responsible party's name and date of birth. </p>
@@ -335,8 +259,8 @@
             <label for="photography" required>Are you interested in a photography session? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="photo_yes" name="photography" value="Yes" required> Yes</li>
-                <li><input type="radio" id="photo_no" name="photography" value="No" required> No</li>
+                <li><input type="radio" id="photo_yes" name="photography" value=1 required> Yes</li>
+                <li><input type="radio" id="photo_no" name="photography" value=0 required> No</li>
             </ul>
 
             <label for="add_services"> Additional Services </label>
@@ -346,17 +270,17 @@
             </p>
             <label for="house_projects" required>House Projects <span style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="house_more_info" name="house_projects" value="More info requested" required>
+                <li><input type="radio" id="house_more_info" name="house_projects" value=1 required>
                     We would like more information when available</li>
-                <li><input type="radio" id="house_not_interested" name="house_projects" value="Not interested" required>
+                <li><input type="radio" id="house_not_interested" name="house_projects" value=0 required>
                     We are not interested in house projects</li>
             </ul>
 
             <label for="financial_relief" required>Financial Relief <span style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="relief_more_info" name="financial_relief" value="More info requested"
+                <li><input type="radio" id="relief_more_info" name="financial_relief" value=1
                         required> We would like more information when available</li>
-                <li><input type="radio" id="relief_not_interested" name="financial_relief" value="Not interested"
+                <li><input type="radio" id="relief_not_interested" name="financial_relief" value=0
                         required> We are not interested in financial relief</li>
             </ul>
             <br>
@@ -364,16 +288,5 @@
         </form>
 
     </main>
-    <script>
-    function fillForm() {
-        var dropdown = document.getElementById("familyDropdown");
-        var selectedOption = dropdown.options[dropdown.selectedIndex];
-
-        document.getElementById("name").value = selectedOption.getAttribute("data-name") || "";
-        document.getElementById("email").value = selectedOption.getAttribute("data-email") || "";
-        document.getElementById("address").value = selectedOption.getAttribute("data-address") || "";
-    }
-    </script>
 </body>
-
 </html>
