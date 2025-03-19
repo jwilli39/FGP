@@ -87,8 +87,7 @@
                 $_SESSION['form_data'] = $args;
 
                 $required = array('name', 'email', 'address', 'freezer_meals',
-                'house_cleaning', 'lawn_care', 'aaa_membership', 'photography', 
-                'house_projects', 'financial_relief'
+                'house_cleaning', 'lawn_care', 'aaa_membership'
                     //form requries these but they cannot be confirmed by computer
                 );
                 
@@ -126,9 +125,6 @@
                 $lawn_care = $args['lawn_care'];
                 $points_used += ($lawn_care * 3);
                 $AAA_membership = $args['aaa_membership'];
-                $photography = $args['photography'];
-                $house_projects = $args['house_projects'];
-                $financial_relief = $args['financial_relief'];
 
                 // checkbox fields
                 //Collect allergies selected
@@ -222,6 +218,8 @@
                 
                 $giftCardPickUp = '';
 
+                $monthly_community_package = isset($args['monthly_community_package']) ? $args['monthly_community_package'] : null;
+
                 // Make a new PointsProg instance
                 $newpointsprog = new PointsProg(
                     $id, $name, $email, $address, $freezer_meals, 
@@ -229,8 +227,8 @@
                     $grocery, $gas, 
                     $house_cleaning, $lawn_care, 
                     $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
-                    $photography, $house_projects, $financial_relief, $points_used,
-                    $giftCardPickUp
+                    $points_used,
+                    $giftCardPickUp, $monthly_community_package
                 );
 
                 // Add it to the SQL table

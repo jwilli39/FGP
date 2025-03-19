@@ -32,11 +32,9 @@ function add_points_prog($pointsprog) {
             aaa_membership = '" . $pointsprog->getAAAMembership() . "',
             aaa_membership_name = '" . $pointsprog->getAAAMembershipName() . "',
             aaa_membership_dob = '" . $pointsprog->getAAAMembershipDOB() . "',
-            photography = '" . $pointsprog->getPhotography() . "',
-            house_projects = '" . $pointsprog->getHouseProjects() . "',
-            financial_relief = '" . $pointsprog->getFinancialRelief() . "',
             points_used = '" . $pointsprog->getPointsUsed() . "',
-            giftCardPickUp = '" . $pointsprog->getGiftCardPickUp() . "'
+            giftCardPickUp = '" . $pointsprog->getGiftCardPickUp() . "',
+            monthly_community_package = '" . $pointsprog->getMonthlyPackage() . "' 
             WHERE email = '" . $pointsprog->getEmail() . "'
         ");
         mysqli_close($con);
@@ -63,11 +61,9 @@ function add_points_prog($pointsprog) {
                 $pointsprog->getAAAMembership() . '","' .
                 $pointsprog->getAAAMembershipName() . '","' .
                 $pointsprog->getAAAMembershipDOB() . '","' .
-                $pointsprog->getPhotography() . '","' .
-                $pointsprog->getHouseProjects() . '","' .
-                $pointsprog->getFinancialRelief() . '","' .
                 $pointsprog->getPointsUsed() . '","' .
-                $pointsprog->getGiftCardPickUp() .
+                $pointsprog->getGiftCardPickUp() . '","' .
+                $pointsprog->getMonthlyPackage() .
                 '");'
             );							
             mysqli_close($con);
@@ -144,9 +140,6 @@ function make_a_points_prog($result_row) {
         $result_row['AAA_membership'],
         $result_row['AAA_membership_name'],
         $result_row['AAA_membership_DOB'],
-        $result_row['photography'],
-        $result_row['house_projects'],
-        $result_row['financial_relief'],
         $result_row['points_used'],
         $result_row['giftCardPickUp']
     );   
