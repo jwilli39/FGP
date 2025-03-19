@@ -1,154 +1,253 @@
 <?php
-session_start();
+  // Authors: Harmony Peura and Grayson Jones
+    // Parses and saves input from the Points Program Form
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+    session_cache_expire(30);
+    session_start();
+    require_once('include/input-validation.php');
+    // $loggedIn = false;
+    // if (isset($_SESSION['change-password'])) {
+    //     header('Location: changePassword.php');
+    //     die();
+    // }
+    // if (isset($_SESSION['_id'])) {
+    //     $loggedIn = true;
+    //     $accessLevel = $_SESSION['access_level'];
+    //     $userID = $_SESSION['_id'];
+    // }
 
-require_once('include/input-validation.php');
-require_once('domain/PointsProg.php');
-require_once('database/dbPointsProg.php');
-require_once('domain/Person.php');
-require_once('database/dbPersons.php');
-require_once('database/dbConnect.php');
+    // Require admin privileges
+    /*if ($accessLevel < 2)
+    {
+        header('Location: login.php');
+        echo 'bad access level';
+        die();
+    }*/
+    // if (isset($_SESSION['_id'])) {
+    //     header('Location: index.php');
+    // } else {
+    //     $_SESSION['logged_in'] = 1;
+    //     $_SESSION['access_level'] = 0;
+    //     $_SESSION['venue'] = "";
+    //     $_SESSION['type'] = "";
+    //     $_SESSION['_id'] = "guest";
+    //     header('Location: personEdit.php?id=new');
+    // }
+    
+    $loggedIn = false;
+    $accessLevel = 0;
+    $userID = null;
+    $isAdmin = false;
 
-// -------------------------------------------------------------------
-// 1) SECURITY CHECKS
-// -------------------------------------------------------------------
-if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-    header('Location: login.php');
-    exit;
-}
-
-$loggedIn    = isset($_SESSION['_id']);
-$accessLevel = $_SESSION['access_level'] ?? 0;
-$isAdmin     = $accessLevel >= 2;
-$userID      = $_SESSION['_id'] ?? null;
-
-if (!$loggedIn) {
-    header('Location: login.php');
-    exit;
-}
-
-$id = $isAdmin && isset($_GET['id']) ? sanitize($_GET['id']) : $userID;
-
-// -------------------------------------------------------------------
-// 2) PROCESS FORM SUBMISSION
-// -------------------------------------------------------------------
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $ignoreList = array('password');
-    $args = sanitize($_POST, $ignoreList);
-    $_SESSION['form_data'] = $args;
-
-    // Required fields
-    $required = ['name', 'email', 'address', 'freezer_meals', 'house_cleaning', 'lawn_care', 'aaa_membership'];
-    if (!wereRequiredFieldsSubmitted($args, $required)) {
-        header("Location: pointsProg.php?error=missing_fields");
-        exit;
+    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+        header('Location: login.php');
+        die();
     }
 
-    $name  = $args['name'];
-    $email = $args['email'];
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+        $accessLevel = $_SESSION['access_level'];
+        $isAdmin = $accessLevel >= 2;
+        $userID = $_SESSION['_id'];        
+    } 
 
-    // Validate email existence in DB
-    $con = connect();
-    $stmt = $con->prepare("SELECT id FROM dbPersons WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 0) {
-        header("Location: pointsProg.php?error=email_not_found");
-        exit;
+    else {
+        header('Location: login.php');
+        die();
     }
 
-    // Calculate points
-    $points_used = 0;
-    $freezer_meals = $args['freezer_meals'];
-    $points_used += ($freezer_meals != 2) ? ($freezer_meals / 2) : 0;
-    $points_used += $args['house_cleaning'] * 7;
-    $points_used += $args['lawn_care'] * 3;
-
-    // Handle checkbox selections
-    $allergies = isset($args["allergies"]) ? implode(",", $args["allergies"]) : "";
-    if (!empty($args["otherAllergyText"])) {
-        $allergies .= ",Other: " . $args["otherAllergyText"];
+    if ($isAdmin && isset($_GET['id'])) {
+        require_once('include/input-validation.php');
+        $args = sanitize($_GET);
+        $id = strtolower($args['id']);
+    } else {
+        $id = $userID; // Use session ID if no ID provided in GET parameters
     }
-
-    $snacks = isset($args["snacks"]) ? implode(",", $args["snacks"]) : "";
-    if (!empty($args["otherSnackText"])) {
-        $snacks .= ",Other: " . $args["otherSnackText"];
-    }
-
-    $grocery = isset($args["grocery"]) ? implode(",", $args["grocery"]) : "";
-    $gas = isset($args["gas"]) ? implode(",", $args["gas"]) : "";
-
-    // Extract negative points from grocery and gas selections
-    preg_match_all('/-(\d+)/', $grocery, $groceryMatches);
-    foreach ($groceryMatches[1] as $m) {
-        $points_used += intval($m);
-    }
-
-    preg_match_all('/-(\d+)/', $gas, $gasMatches);
-    foreach ($gasMatches[1] as $m) {
-        $points_used += intval($m);
-    }
-
-    // Validate date
-    $AAA_membership_name = $args['aaa_membership_name'] ?? "";
-    $AAA_membership_DOB = !empty($args['aaa_membership_dob']) ? validateDate($args['aaa_membership_dob']) : "";
-    if ($AAA_membership_DOB === false) {
-        header("Location: pointsProg.php?error=invalid_dob");
-        exit;
-    }
-
-    // Ensure points do not exceed limit
-    if ($points_used > 19) {
-        header("Location: pointsProg.php?error=too_many_points");
-        exit;
-    }
-
-    // Generate new ID if necessary
-    $id = find_next_id() + 1;
-    $giftCardPickUp = '';
-    $monthly_community_package = $args['monthly_community_package'] ?? null;
-
-    // Create new PointsProg object
-    $newPointsProg = new PointsProg(
-        $id, $name, $email, $args['address'], $freezer_meals, 
-        $allergies, $snacks, 
-        $grocery, $gas, 
-        $args['house_cleaning'], $args['lawn_care'], 
-        $args['aaa_membership'], $AAA_membership_name, $AAA_membership_DOB, 
-        $points_used, $giftCardPickUp, $monthly_community_package
-    );
-
-    // Insert into DB
-    $result = add_points_prog($newPointsProg);
-
-    if (!$result) {
-        die("Database Insert Failed: " . mysqli_error($con));
-    }
-
-    // Success: redirect to homepage
-    header("Location: index.php?success=points_added");
-    exit;
-}
 ?>
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>FGP | Points Program</title>
+    <title>FGP | Points Program </title>
 </head>
+
 <body>
-    <?php require_once('header.php'); ?>
     <?php
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            require_once('pointsProgForm.php'); 
-        } else {
-            echo "<p>Form processed successfully. If not redirected, <a href='index.php'>click here</a>.</p>";
-        }
-    ?>
+            require_once('header.php');
+            require_once('domain/PointsProg.php');
+            require_once('database/dbPointsProg.php');
+            require_once('domain/Person.php');
+            require_once('database/dbPersons.php');
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                // make every submitted field SQL-safe except for password
+                $ignoreList = array('password');
+                $args = sanitize($_POST, $ignoreList);
+                $_SESSION['form_data'] = $args;
+
+                $required = array('name', 'email', 'address', 'freezer_meals',
+                'house_cleaning', 'lawn_care', 'aaa_membership'
+                    //form requries these but they cannot be confirmed by computer
+                );
+                
+                $points_used = 0;
+                
+                $errors = false;
+                if (!wereRequiredFieldsSubmitted($args, $required)) {
+                    $errors = true;
+                }
+
+                $id = find_next_id() + 1;
+                $name = $args['name'];
+                $email = $args['email'];
+
+                $con=connect();
+                $query = "SELECT * FROM dbPersons WHERE email = '$email'";
+                $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result) == 0) {
+                    $errors = true;
+                    header("Location: pointsProg.php?emailError");
+                    die();
+
+                }
+
+                $address = $args['address'];
+                $freezer_meals = $args['freezer_meals'];
+                if ($freezer_meals != 2){
+                    $points_used += ($freezer_meals / 2);
+                }
+                
+                // $snack_notes = $args['snack_notes'];
+                
+                $house_cleaning = $args['house_cleaning'];
+                $points_used += ($house_cleaning * 7);
+
+                $lawn_care = $args['lawn_care'];
+                $points_used += ($lawn_care * 3);
+                $AAA_membership = $args['aaa_membership'];
+
+                // checkbox fields
+                //Collect allergies selected
+                if(isset($_POST["allergies"])){
+                    $allergies = implode(",", $_POST["allergies"]);
+                }
+                // Check if "other" checkbox was selected and text box is not empty
+                if (isset($_POST["otherAllergy"]) && isset($_POST["otherAllergyText"]) && !empty($_POST["otherAllergyText"])) {
+                    // Add the other allergy to the allergies array
+                    $otherAllergy =  ",Other: " . $_POST["otherAllergyText"];
+                    $allergies .= $otherAllergy;
+                }
+
+                // Check if 'snacks' are selected
+                if (isset($_POST["snacks"])) {
+                    // Implode the array into a comma-separated string
+                    $snacks = implode(",", $_POST["snacks"]);
+                } else {
+                    // If no snacks selected, set to an empty string or null
+                    $snacks = '';  // Or $snacks = null;
+                }  
+ 
+                // Check if "other" checkbox was selected and text box is not empty
+                if (isset($_POST["otherSnack"]) && isset($_POST["otherSnackText"]) && !empty($_POST["otherSnackText"])) {
+                    // Add the other snack to the snacks array
+                    $otherSnack = ",Other: " . $_POST["otherSnackText"];
+                    $snacks .= $otherSnack;
+                }
+                //grocery fields
+                //Collect grocery input
+                if(isset($_POST["grocery"])){
+                    $grocery = implode(",", $_POST["grocery"]);
+                }
+                //gas fields
+                //Collect gas selected
+                if(isset($_POST["gas"])){
+                    $gas = implode(",", $_POST["gas"]);
+                }
+
+                // Regular expression pattern to match integers inside parentheses
+                $pattern = '/-(\d+)/';
+
+                // Use preg_match_all to find all matches of the pattern in the string
+                preg_match_all($pattern, $grocery, $matches);
+
+                // $matches[1] contains all the integers found within parentheses
+                foreach ($matches[1] as $match) {
+                    // Convert the matched string to integer and add to the total
+                    $points_used += intval($match);
+                }
+
+                // Use preg_match_all to find all matches of the pattern in the string
+                preg_match_all($pattern, $gas, $matches);
+
+                // $matches[1] contains all the integers found within parentheses
+                foreach ($matches[1] as $match) {
+                    // Convert the matched string to integer and add to the total
+                    $points_used += intval($match);
+                }
+
+                if ($errors) {
+                    echo '<p>Your form submission contained unexpected input.</p>';
+                    die();
+                }
+
+                // Optional fields
+                $optional=array('aaa_membership_name', 'aaa_membership_dob');
+
+                if($args['aaa_membership_name']){
+                    $AAA_membership_name=$args['aaa_membership_name'];
+                }
+                else{
+                    $AAA_membership_name="";
+                }
+
+                if($args['aaa_membership_dob']){
+                    $AAA_membership_DOB = validateDate($args['aaa_membership_dob']);
+                    if (!$AAA_membership_DOB) {
+                        $errors = true;
+                        echo 'bad dob';
+                    }
+                }
+                else{
+                    $AAA_membership_DOB="";
+                }
+
+                if($points_used > 19){
+                    header("Location: pointsProg.php?pointsError");
+                    die();
+                }
+                
+                $giftCardPickUp = '';
+
+                $monthly_community_package = isset($args['monthly_community_package']) ? $args['monthly_community_package'] : null;
+
+                // Make a new PointsProg instance
+                $newpointsprog = new PointsProg(
+                    $id, $name, $email, $address, $freezer_meals, 
+                    $allergies, $snacks, // $snack_notes, 
+                    $grocery, $gas, 
+                    $house_cleaning, $lawn_care, 
+                    $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
+                    $points_used,
+                    $giftCardPickUp, $monthly_community_package
+                );
+
+                // Add it to the SQL table
+                $result = add_points_prog($newpointsprog);
+                header("Location: index.php?pointsProgSuccess");
+                if (!$result) {
+                    echo '<p>something went wrong</p>';
+                } else {
+                    if ($loggedIn) {
+                        echo '<script>document.location = "index.php?pointsProgSuccess";</script>';
+                    } else {
+                        echo '<script>document.location = "login.php?pointsProgSuccess";</script>';
+                    }
+                }
+            } else {
+                require_once('pointsProgForm.php'); 
+            }
+        ?>
 </body>
+
 </html>
