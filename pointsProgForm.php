@@ -134,14 +134,14 @@
                 and there's no need for you to be home.
             </p>
 
-            <label for="freezer_meals_and_snacks">How many freezer meals would you like? <span
+            <label for="freezer_meals_and_snacks" required>How many freezer meals would you like? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="freezer_2" name="freezer_meals" value=2> 2 Meals per month (Free)</li>
-                <li><input type="radio" id="freezer_4" name="freezer_meals" value=4> 4 meals per month (2 points)</li>
-                <li><input type="radio" id="freezer_6" name="freezer_meals" value=6> 6 meals per month (3 points)</li>
-                <li><input type="radio" id="freezer_8" name="freezer_meals" value=8> 8 meals per month (4 points)</li>
-                <li><input type="radio" id="freezer_0" name="freezer_meals" value=0> We do not want ANY freezer meals
+                <li><input type="radio" id="freezer_2" name="freezer_meals" value=2 required> 2 Meals per month (Free)</li>
+                <li><input type="radio" id="freezer_4" name="freezer_meals" value=4 required> 4 meals per month (2 points)</li>
+                <li><input type="radio" id="freezer_6" name="freezer_meals" value=6 required> 6 meals per month (3 points)</li>
+                <li><input type="radio" id="freezer_8" name="freezer_meals" value=8 required> 8 meals per month (4 points)</li>
+                <li><input type="radio" id="freezer_0" name="freezer_meals" value=0 required> We do not want ANY freezer meals
                 </li>
             </ul>
 
