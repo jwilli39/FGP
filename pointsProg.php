@@ -117,7 +117,6 @@
                 if ($freezer_meals != 2){
                     $points_used += ($freezer_meals / 2);
                 }
-                $snack_notes = $args['snack_notes'];
                 
                 $house_cleaning = $args['house_cleaning'];
                 $points_used += ($house_cleaning * 7);
@@ -223,7 +222,7 @@
                 // Make a new PointsProg instance
                 $newpointsprog = new PointsProg(
                     $id, $name, $email, $address, $freezer_meals, 
-                    $allergies, $snacks, $snack_notes, 
+                    $allergies, $snacks, 
                     $grocery, $gas, 
                     $house_cleaning, $lawn_care, 
                     $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
