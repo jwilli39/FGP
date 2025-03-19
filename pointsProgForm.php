@@ -176,7 +176,7 @@
                             echo '<select name="grocery[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
                             $numCards = 1;
-                            for ($i = 25; $i <= 400; $i += 25) {
+                            for ($i = 25; $i <= 475; $i += 25) {
                                 $value = $vendor['vendorName'] . "-" . $numCards ;
                                 echo '<option value="'. $value .'" id="'. $value .'">$'. $i .' '. $vendor['vendorName'] . ' Gift Card ('. ($i / 25) .' points)</option>';
                                 $numCards++;
@@ -201,7 +201,7 @@
                             echo '<select name="gas[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
                             $numCards = 1;
-                            for ($i = 25; $i <= 400; $i += 25) {
+                            for ($i = 25; $i <= 475; $i += 25) {
                                 $value = $vendor['vendorName'] ."-". $numCards ;
                                 echo '<option value="'. $value .'" id ="'. $value .'">$'. $i .' '. $vendor['vendorName'] . ' Gift Card ('. ($i / 25) .' points)</option>';
                                 $numCards++;
