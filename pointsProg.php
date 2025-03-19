@@ -2,6 +2,7 @@
   // Authors: Harmony Peura and Grayson Jones
     // Parses and saves input from the Points Program Form
 
+    ob_start();
     session_cache_expire(30);
     session_start();
     require_once('include/input-validation.php');
@@ -187,7 +188,7 @@
                 }
 
                 if ($errors) {
-                    echo '<p>Your form submission contained unexpected input.</p>';
+                    header("Location: pointsProg.php?error=unexpected_input");
                     die();
                 }
 
@@ -248,6 +249,8 @@
                 require_once('pointsProgForm.php'); 
             }
         ?>
+<?php ob_end_flush(); ?>
+
 </body>
 
 </html>
