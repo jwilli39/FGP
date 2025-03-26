@@ -47,7 +47,7 @@
         // Sanitize input, check for required fields
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "address", "freezer_meals", "allergies", "snack_notes", "house_cleaning", "lawn_care",
+            "name", "address", "freezer_meals", "allergies", "house_cleaning", "lawn_care",
             "AAA_membership", "monthly_community_package"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -134,14 +134,14 @@
                 and there's no need for you to be home.
             </p>
 
-            <label for="freezer_meals_and_snacks">How many freezer meals would you like? <span
+            <label for="freezer_meals_and_snacks" required>How many freezer meals would you like? <span
                     style="color: red;">*</span></label>
             <ul>
-                <li><input type="radio" id="freezer_2" name="freezer_meals" value=2> 2 Meals per month (Free)</li>
-                <li><input type="radio" id="freezer_4" name="freezer_meals" value=4> 4 meals per month (2 points)</li>
-                <li><input type="radio" id="freezer_6" name="freezer_meals" value=6> 6 meals per month (3 points)</li>
-                <li><input type="radio" id="freezer_8" name="freezer_meals" value=8> 8 meals per month (4 points)</li>
-                <li><input type="radio" id="freezer_0" name="freezer_meals" value=0> We do not want ANY freezer meals
+                <li><input type="radio" id="freezer_2" name="freezer_meals" value=2 required> 2 Meals per month (Free)</li>
+                <li><input type="radio" id="freezer_4" name="freezer_meals" value=4 required> 4 meals per month (2 points)</li>
+                <li><input type="radio" id="freezer_6" name="freezer_meals" value=6 required> 6 meals per month (3 points)</li>
+                <li><input type="radio" id="freezer_8" name="freezer_meals" value=8 required> 8 meals per month (4 points)</li>
+                <li><input type="radio" id="freezer_0" name="freezer_meals" value=0 required> We do not want ANY freezer meals
                 </li>
             </ul>
 
@@ -176,7 +176,7 @@
                             echo '<select name="grocery[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
                             $numCards = 1;
-                            for ($i = 25; $i <= 400; $i += 25) {
+                            for ($i = 25; $i <= 475; $i += 25) {
                                 $value = $vendor['vendorName'] . "-" . $numCards ;
                                 echo '<option value="'. $value .'" id="'. $value .'">$'. $i .' '. $vendor['vendorName'] . ' Gift Card ('. ($i / 25) .' points)</option>';
                                 $numCards++;
@@ -201,7 +201,7 @@
                             echo '<select name="gas[]" id="'. $vendor['vendorName'] .'">';
                             echo '<option value="none">No '. $vendor['vendorName'] .' Gift Cards</option>';
                             $numCards = 1;
-                            for ($i = 25; $i <= 400; $i += 25) {
+                            for ($i = 25; $i <= 475; $i += 25) {
                                 $value = $vendor['vendorName'] ."-". $numCards ;
                                 echo '<option value="'. $value .'" id ="'. $value .'">$'. $i .' '. $vendor['vendorName'] . ' Gift Card ('. ($i / 25) .' points)</option>';
                                 $numCards++;

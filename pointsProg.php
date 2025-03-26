@@ -2,6 +2,7 @@
   // Authors: Harmony Peura and Grayson Jones
     // Parses and saves input from the Points Program Form
 
+    ob_start();
     session_cache_expire(30);
     session_start();
     require_once('include/input-validation.php');
@@ -117,7 +118,8 @@
                 if ($freezer_meals != 2){
                     $points_used += ($freezer_meals / 2);
                 }
-                $snack_notes = $args['snack_notes'];
+                
+                // $snack_notes = $args['snack_notes'];
                 
                 $house_cleaning = $args['house_cleaning'];
                 $points_used += ($house_cleaning * 7);
@@ -186,7 +188,7 @@
                 }
 
                 if ($errors) {
-                    echo '<p>Your form submission contained unexpected input.</p>';
+                    header("Location: pointsProg.php?error=unexpected_input");
                     die();
                 }
 
@@ -223,7 +225,7 @@
                 // Make a new PointsProg instance
                 $newpointsprog = new PointsProg(
                     $id, $name, $email, $address, $freezer_meals, 
-                    $allergies, $snacks, $snack_notes, 
+                    $allergies, $snacks, // $snack_notes, 
                     $grocery, $gas, 
                     $house_cleaning, $lawn_care, 
                     $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
@@ -247,6 +249,8 @@
                 require_once('pointsProgForm.php'); 
             }
         ?>
+<?php ob_end_flush(); ?>
+
 </body>
 
 </html>

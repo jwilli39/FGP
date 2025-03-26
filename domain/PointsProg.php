@@ -11,7 +11,6 @@ class PointsProg {
     private $freezer_meals;
     private $allergies;
     private $snacks;
-    private $snack_notes;
     private $grocery;
     private $gas;
     private $house_cleaning;
@@ -25,7 +24,7 @@ class PointsProg {
 
     // Constructor
     public function __construct($id, $name, $email, $address, $freezer_meals, 
-            $allergies, $snacks, $snack_notes, $grocery, $gas, $house_cleaning, $lawn_care, 
+            $allergies, $snacks, $grocery, $gas, $house_cleaning, $lawn_care, 
             $AAA_membership, $AAA_membership_name, $AAA_membership_DOB, 
             $points_used, $giftCardPickUp, $monthly_community_package) {
         $this->id = $id;
@@ -35,7 +34,6 @@ class PointsProg {
         $this->freezer_meals = $freezer_meals;
         $this->allergies = $allergies;
         $this->snacks = $snacks;
-        $this->snack_notes = $snack_notes;
         $this->grocery = $grocery;
         $this->gas = $gas;
         $this->house_cleaning = $house_cleaning;
@@ -75,10 +73,6 @@ class PointsProg {
 
     public function getSnacks() {
         return $this->snacks;
-    }
-
-    public function getSnackNotes() {
-        return $this->snack_notes;
     }
 
     public function getGrocery() {
