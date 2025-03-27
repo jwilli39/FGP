@@ -1,5 +1,6 @@
 <?php
 
+
     // Authors: Harmony Peura and Grayson Jones
     // HTML form for the Points Program Form, to be filled out by families.
 
@@ -100,8 +101,7 @@
     <?php endif ?>
     <main class="date">
         <h2>Points Program Form</h2>
-        <form id="new-points-prog-form" method="post">
-
+        <form id="new-points-prog-form" method="post" action="reviewPointsProg.php">
             <p> Our goal is to provide servies that meet your needs as a family during this
                 difficult time. You have a total of <b>19 points</b> "to spend" each month.
                 Your choices will remain the same each month unless you change them using
@@ -144,7 +144,7 @@
                 <li><input type="radio" id="freezer_0" name="freezer_meals" value=0 required> We do not want ANY freezer meals
                 </li>
             </ul>
-
+            
             <label for="allergies">Are there any food allergies that we need to be aware of? <span
                     style="color: red;">*</span></label>
             <ul>
