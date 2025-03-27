@@ -122,7 +122,7 @@
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
         $current_page = substr($current_page, strpos($current_page,"/"));
         
-        if($permission_array[$current_page]>$_SESSION['access_level']){
+        if (isset($permission_array['reviewpointsprog.php']) && $permission_array['reviewpointsprog.php'] == 0) {
             //in this case, the user doesn't have permission to view this page.
             //we redirect them to the index page.
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
