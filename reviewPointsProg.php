@@ -138,8 +138,7 @@ function safe($key, $default = 'Not provided') {
                 border: none; 
                 border-radius: 4px; 
                 font-weight: 500; 
-                width: 200%; 
-                max-width: 542px; 
+                width: 100%;  
                 margin: 0 auto; 
                 display: block; 
                 text-align: center; 
@@ -152,3 +151,4 @@ function safe($key, $default = 'Not provided') {
 </main>
 </body>
 </html>
+
