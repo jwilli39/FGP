@@ -298,7 +298,33 @@ function retrieve_aaa_dob_by_email($email) {
     mysqli_close($con);
     return "";
 }
+
+/**
+ * Retrieve the most recent Points Program submission for a given email address.
+ *
+ * This function queries the dbPointsProg table and returns the latest
+ * record (based on ID) submitted by the specified email.
+ *
+ * @param string $email  The email address to search for
+ * @return array                The most recent submission as an associative array,
+ *                                         or an empty array if no record is found
+ */
+function get_points_prog_from_email($email) {
+        $con = connect(); // Assumes connect() returns a valid MySQLi connection
+        $email = mysqli_real_escape_string($con, $email);
+
+        $query = "SELECT * FROM dbPointsProg WHERE email = '$email' ORDER BY id DESC LIMIT 1";
+        $result = mysqli_query($con, $query);       
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_assoc($result);
+        }       
+        
+        return [];
+}
+
 ?>
+
 
 <script>
 function fillForm() {
