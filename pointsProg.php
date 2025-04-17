@@ -5,36 +5,7 @@
     ob_start();
     session_cache_expire(30);
     session_start();
-    require_once('include/input-validation.php');
-    // $loggedIn = false;
-    // if (isset($_SESSION['change-password'])) {
-    //     header('Location: changePassword.php');
-    //     die();
-    // }
-    // if (isset($_SESSION['_id'])) {
-    //     $loggedIn = true;
-    //     $accessLevel = $_SESSION['access_level'];
-    //     $userID = $_SESSION['_id'];
-    // }
-
-    // Require admin privileges
-    /*if ($accessLevel < 2)
-    {
-        header('Location: login.php');
-        echo 'bad access level';
-        die();
-    }*/
-    // if (isset($_SESSION['_id'])) {
-    //     header('Location: index.php');
-    // } else {
-    //     $_SESSION['logged_in'] = 1;
-    //     $_SESSION['access_level'] = 0;
-    //     $_SESSION['venue'] = "";
-    //     $_SESSION['type'] = "";
-    //     $_SESSION['_id'] = "guest";
-    //     header('Location: personEdit.php?id=new');
-    // }
-    
+    require_once('include/input-validation.php');  
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
@@ -233,17 +204,39 @@
                     $giftCardPickUp, $monthly_community_package
                 );
 
+
+
+
+                // Get the current DB state before updating
+                $beforeUpdate = get_points_form($email);
+
                 // Add it to the SQL table
                 $result = add_points_prog($newpointsprog);
-                header("Location: index.php?pointsProgSuccess");
+
+                // Get the DB state after updating
+                $afterUpdate = get_points_form($email);
+
+                // Compare old and new DB data
+                $changed = hasFormChanged($afterUpdate, $beforeUpdate);
+
+                // Debug output
+                echo "<pre>";
+                echo "Form Changed: " . ($changed ? "Yes" : "No") . "\n\n";
+                echo "Before Update:\n";
+                var_dump($beforeUpdate);
+                echo "\nAfter Update:\n";
+                var_dump($afterUpdate);
+                echo "</pre>";
+
+                // header("Location: index.php?pointsProgSuccess");
                 if (!$result) {
                     echo '<p>something went wrong</p>';
                 } else {
-                    if ($loggedIn) {
-                        echo '<script>document.location = "index.php?pointsProgSuccess";</script>';
-                    } else {
-                        echo '<script>document.location = "login.php?pointsProgSuccess";</script>';
-                    }
+                    // if ($loggedIn) {
+                    //     echo '<script>document.location = "index.php?pointsProgSuccess";</script>';
+                    // } else {
+                    //     echo '<script>document.location = "login.php?pointsProgSuccess";</script>';
+                    // }
                 }
             } else {
                 require_once('pointsProgForm.php'); 
