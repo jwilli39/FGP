@@ -1,3 +1,19 @@
+/***************************************************************************
+ * fillForm.js
+ * 
+ * Description:
+ * This script provides functionality for auto-filling and validating 
+ * the Points Program Form. When a family is selected from the dropdown, 
+ * it auto-populates form fields such as name, email, address, and AAA details. 
+ * It also validates the total number of points selected on form submission 
+ * and prevents submission if the user exceeds the 19-point limit.
+ * 
+ * Features:
+ * - Auto-fills form fields based on selected family data attributes.
+ * - Automatically checks "Already Have It" if AAA info is prefilled.
+ * - Calculates and validates total points before allowing submission.
+ ****************************************************************************/
+
 /**
  * Auto-fills form fields based on the selected family in the dropdown.
  * 
@@ -26,6 +42,15 @@ function fillForm() {
     }
 }
 
+/**
+ * Form Submission Validation
+ * 
+ * Validates the total number of points selected in the Points Program Form.
+ * - Calculates points from all applicable categories (meals, cleaning, lawn care, grocery, gas).
+ * - Prevents form submission and alerts the user if the total exceeds 19 points.
+ * 
+ * Trigger: On form submission.
+ */
 document.getElementById("new-points-prog-form").addEventListener("submit", function (e) {
     const MAX_POINTS = 19;
     let totalPoints = 0;
