@@ -103,7 +103,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
     //$domain = 'jenniferp161.sg-host.com';
-    $domain = 'gvam1012.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
+    $domain = 'jenniferp136.sg-host.com';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
     $fromAddress = "{$fromUser}@{$domain}";
     
     // Simplified headers – only include essential information.
@@ -118,6 +118,30 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         }
     }
     return $results;
+}
+
+
+
+/**
+ * Send a single email to a specified recipient.
+ * 
+ * @param string $toEmail   Recipient email address.
+ * @param string $fromUser  Local-part for the From address.
+ * @param string $subject   Email subject.
+ * @param string $body      Email body content.
+ * @return bool             Returns true if the email was successfully accepted for delivery, false otherwise.
+ */
+function sendEmail(string $toEmail, string $fromUser, string $subject, string $body): bool {
+    $domain = 'jenniferp136.sg-host.com';
+    $fromAddress = "{$fromUser}@{$domain}";
+
+    $headers = "From: {$fromAddress}\r\n";
+
+    if (filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+        return mail($toEmail, $subject, $body, $headers);
+    } else {
+        return false;
+    }
 }
 
 ?>
