@@ -243,8 +243,8 @@ require_once('include/input-validation.php');
      * Retrieves and injects the user's name, email, address, and AAA membership info 
      * into the form using inline JavaScript, based on their session ID and access level.
      *
-     * @param string $userID        The current user's session ID (usually their email).
-     * @return void                          Outputs a <script> block to populate form fields on page load.
+     * @param string $userID The current user's session ID (usually their email).
+     * @return void Outputs a <script> block to populate form fields on page load.
      */
      function autoFillPointsFormFamily($userID) {
          global $db, $_SESSION;
@@ -291,8 +291,8 @@ require_once('include/input-validation.php');
     * allowing users to choose gift card amounts. Each dropdown includes values representing
     * the vendor name and a quantity-based value used for point calculations.
     *
-    * @param mysqli_result $vendors        List of gift card vendors from the database.
-    * @param string $type                           Field name prefix used for form input names (e.g., "grocery" or "gas").
+    * @param mysqli_result $vendors List of gift card vendors from the database.
+    * @param string $type Field name prefix used for form input names (e.g., "grocery" or "gas").
     */
      function renderGiftCardSelect($vendors, $type) {
         if (mysqli_num_rows($vendors) > 0) {
@@ -331,7 +331,7 @@ require_once('include/input-validation.php');
  *  These functions work together to prepare and assemble form data:
  * 
  *    [9]   →   Extract and structure submitted input
- *    [10] →   Collect POST-based extras like allergies and snacks
+ *    [10]  →   Collect POST-based extras like allergies and snacks
  *    [11]  →   Build and return a fully populated PointsProg object
  * 
  *  Used during form submission to create a complete and validated entry.
@@ -346,8 +346,8 @@ require_once('include/input-validation.php');
      * Points Program form. It ensures defaults are set when optional fields are missing,
      * and formats multi-select inputs (e.g., grocery/gas) as comma-separated strings.
      *
-     * @param array $args           Form input data from $_POST.
-     * @return array $form          Data Structured and sanitized form data for further processing or storage.
+     * @param array $args Form input data from $_POST.
+     * @return array $form Data Structured and sanitized form data for further processing or storage.
      */
     function extractBasicFormData($args): array {
         $formData = [];
@@ -411,8 +411,8 @@ require_once('include/input-validation.php');
      * Used to populate the corresponding fields in the Points Program submission.
      *
      * @return array {
-     *     @type string $allergies          Combined allergy string (e.g., "peanuts, dairy, Other: sesame").
-     *     @type string $snacks            Combined snack string (e.g., "crackers, fruit, Other: popcorn").
+     *     @type string $allergies Combined allergy string (e.g., "peanuts, dairy, Other: sesame").
+     *     @type string $snacks Combined snack string (e.g., "crackers, fruit, Other: popcorn").
      * }
      */
      function collectExtrasFromPost(): array {
@@ -459,8 +459,8 @@ require_once('include/input-validation.php');
     * Combines core input fields, allergy/snack selections, and calculates total points
     * to generate a complete and ready-to-save PointsProg entry.
     *
-    * @param array $args        Raw sanitized form input ($_POST) data.
-    * @return PointsProg         Fully constructed PointsProg instance for database insertion or comparison.
+    * @param array $args Raw sanitized form input ($_POST) data.
+    * @return PointsProg Fully constructed PointsProg instance for database insertion or comparison.
     */
      function buildPointsProgFromForm($args): PointsProg {
          // Get main form data
@@ -517,8 +517,8 @@ require_once('include/input-validation.php');
      * Looks up the `AAA_membership_name` field from the latest Points Program
      * form submission in the `dbPointsProg` table using the provided email.
      *
-     * @param string $email      The user's email address used to find the record.
-     * @return string                   The AAA membership name, or an empty string if not found.
+     * @param string $email The user's email address used to find the record.
+     * @return string The AAA membership name, or an empty string if not found.
      */
      function retrieve_aaa_name_by_email($email) {
          $con = connect();
@@ -544,8 +544,8 @@ require_once('include/input-validation.php');
      * Queries the `dbPointsProg` table and retrieves the `AAA_membership_dob`
      * field for the latest submission matching the given email address.
      *
-     * @param string $email     The user's email address to search by.
-     * @return string                  The AAA date of birth as a string, or an empty string if not found.
+     * @param string $email The user's email address to search by.
+     * @return string The AAA date of birth as a string, or an empty string if not found.
      */
     function retrieve_aaa_dob_by_email($email) {
         $con = connect();
@@ -584,9 +584,9 @@ require_once('include/input-validation.php');
      * Used to retrieve the latest form entry submitted by a user, primarily
      * for comparison against a new submission to detect changes or updates.
      *
-     * @param string $email   The user's email address used to look up the form.
-     * @return array                 An associative array of the latest form data,
-     *                                          or an empty array if no records are found.
+     * @param string $email The user's email address used to look up the form.
+     * @return array An associative array of the latest form data, or an empty array if 
+     *                          no records are found.
      */
      function get_points_form($email) {
              $con = connect();
@@ -612,9 +612,9 @@ require_once('include/input-validation.php');
      * and a previously stored one. It checks key fields and accounts for both
      * scalar values and arrays by normalizing them for comparison.
      *
-     * @param array $newData        The new form submission data.
-     * @param array $oldData          The previously saved form data.
-     * @return bool                             True if any values differ; false if identical.
+     * @param array $newData The new form submission data.
+     * @param array $oldData The previously saved form data.
+     * @return bool True if any values differ; false if identical.
      */
      function hasFormChanged(array $newData, array $oldData): bool {
          $keysToCheck = [
@@ -647,12 +647,12 @@ require_once('include/input-validation.php');
      * lawn care, grocery cards, and gas cards. Grocery and gas values are extracted
      * from strings formatted like "VendorName-#".
      *
-     * @param int $freezer_meals        Number of freezer meals selected.
-     * @param int $house_cleaning     Number of house cleaning services selected.
-     * @param int $lawn_care               Number of lawn care services selected.
-     * @param string $grocery             Comma-separated grocery selections (e.g., "Vendor-2").
-     * @param string $gas                    Comma-separated gas selections (e.g., "Vendor-1").
-     * @return int                                    Total calculated points used.
+     * @param int $freezer_meals Number of freezer meals selected.
+     * @param int $house_cleaning Number of house cleaning services selected.
+     * @param int $lawn_care Number of lawn care services selected.
+     * @param string $grocery Comma-separated grocery selections (e.g., "Vendor-2").
+     * @param string $gas Comma-separated gas selections (e.g., "Vendor-1").
+     * @return int Total calculated points used.
      */
      function calculatePointsUsed($freezer_meals, $house_cleaning, $lawn_care, $grocery, $gas): int {
          $points = 0;
