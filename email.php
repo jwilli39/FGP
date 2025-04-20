@@ -97,13 +97,13 @@ function emailAll(string $fromUser, string $subject, string $body): array {
  * @param string $fromUser Local-part for the From address.
  * @param string $subject  Email subject.
  * @param string $body     Email body.
- * @return array           Returns an  array where keys are emails and values are boolean statuses.
+ * @return array Returns an  array where keys are emails and values are boolean statuses.
  */
 function sendEmails(array $emails, string $fromUser, string $subject, string $body): array {
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
     //$domain = 'jenniferp161.sg-host.com';
-    $domain = 'jenniferp136.sg-host.com';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
+    $domain = 'fgpfamily.org';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
     $fromAddress = "{$fromUser}@{$domain}";
     
     // Simplified headers – only include essential information.
@@ -124,27 +124,21 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
  * Send a single email to a specified recipient.
  * 
  * @param string $toEmail Recipient email address.
- * @param string $fromUser Local-part for the From address.
  * @param string $subject Email subject.
  * @param string $body Email body content.
  * @return bool Returns true if the email was successfully accepted for delivery, false otherwise.
  */
-function sendIndividualEmail(string $toEmail, string $fromUser, string $subject, string $body): bool {
-    // Set the domain used for the From address (update for production if needed)
-    $domain = 'notifications@fgpfamily.org';
+function sendIndividualEmail(string $toEmail, string $subject, string $body): bool {
+    // Hardcoded From address
+    $fromAddress = 'notifications@fgpfamily.org';
 
-    // Construct the full From address using the local-part and domain
-    $fromAddress = "{$fromUser}@{$domain}";
-
-    // Set email headers (From only — can be expanded later)
+    // Set email headers
     $headers = "From: {$fromAddress}\r\n";
 
     // Validate recipient email before sending
     if (filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
-        // Send the email using PHP's built-in mail() function
         return mail($toEmail, $subject, $body, $headers);
     } else {
-        // Return false if the email address is invalid
         return false;
     }
 }
@@ -155,27 +149,35 @@ function sendIndividualEmail(string $toEmail, string $fromUser, string $subject,
  * Sends a confirmation email to the user whose form was updated,
  * letting them know their submission was processed successfully.
  *
- * @param string $recipientEmail The email address of the user being notified.
- * @param string $formEmail The email address associated with the updated form.
+ * @param string $userEmail The email address of the user being notified and whose form was updated.
  * @return bool True if the email was successfully sent, false otherwise.
  */
-function notifyUserOfPointsUpdate(string $recipientEmail, string $formEmail): bool {
+function notifyUserOfPointsUpdate(string $userEmail): bool {
     $subject = "Confirmation: Points Program Form Updated";
 
     $body  = "Dear User,\n\n";
-    $body .= "Your Points Program form associated with $formEmail has been successfully updated.\n\n";
+    $body .= "Your Points Program form associated with $userEmail has been successfully updated.\n\n";
     $body .= "If you did not make this change, please contact fgpfamily.org.\n\n";
     $body .= "Thank you,\nFGP Team";
 
     // ===== TESTING ONLY =====
-    $testEmail = "your@email.com"; // <--- replace with your test email
+    $testEmail = "jwilli39@mail.umw.edu";
     return mail($testEmail, $subject, $body, "From: notifications@fgpfamily.org\r\n");
     // ===== END TESTING =====
 
-    // return sendIndividualEmail($recipientEmail, 'notifications', $subject, $body); // <--- uncomment after test
+    // return sendIndividualEmail($userEmail, $subject, $body); // <--- uncomment after test
 }
 
 
+/**
+ * Notify all admins that a user's Points Program form has been updated.
+ *
+ * Sends a system-generated email to all admins informing them that
+ * a specific user's Points Program form has been changed.
+ *
+ * @param string $userEmail The email address of the user whose form was updated.
+ * @return array An array with email addresses as keys and boolean send statuses as values.
+ */
 function notifyAdminsOfPointsUpdate(string $userEmail): array {
     $subject = "Points Program Form Updated";
 
@@ -185,11 +187,12 @@ function notifyAdminsOfPointsUpdate(string $userEmail): array {
     $body .= "FGP System";
 
     // ===== TESTING ONLY =====
-    $testEmails = ["your@email.com"]; // <--- replace with your test email
+    $testEmails = ["jwilli39@mail.umw.edu"]; 
     return sendEmails($testEmails, 'notifications', $subject, $body);
     // ===== END TESTING =====
 
     // return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
 }
+
 
 ?>
