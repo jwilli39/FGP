@@ -82,6 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo '<p>We encountered an issue while processing your submission. Please try again later.</p>';
     } else {
         if ($changed) {
+            // Retrieve person info
+            require_once('database/dbPersons.php');
+            $person = retrieve_person($userID);
+    
             // ===== PRODUCTION =====
             // notifyUserOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
             // notifyAdminsOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
@@ -99,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         require_once('pointsProgForm.php');
     }
+    
 
 ?>
 <?php ob_end_flush(); ?>
