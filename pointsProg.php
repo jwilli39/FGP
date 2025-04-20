@@ -83,23 +83,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         if ($changed) {
             // ===== PRODUCTION =====
-            // notifyUserOfPointsUpdate($email, $email);
+            // notifyUserOfPointsUpdate($email);
             // notifyAdminsOfPointsUpdate($email);
-
+    
             // ===== TEST CASE =====
-            notifyUserOfPointsUpdate($email, $email); // Test: sends to your email
-            notifyAdminsOfPointsUpdate($email);       // Test: sends to your email
-
+            notifyUserOfPointsUpdate($email);
+            notifyAdminsOfPointsUpdate($email);
+    
             // Redirect with success indicator
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=true";</script>';
         } else {
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=false";</script>';
         }
     }
-} else {
-    require_once('pointsProgForm.php');
-}
-    
+    } else {
+        require_once('pointsProgForm.php');
+    }
+
 ?>
 <?php ob_end_flush(); ?>
 </body>
