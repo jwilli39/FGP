@@ -120,28 +120,57 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     return $results;
 }
 
-
-
 /**
  * Send a single email to a specified recipient.
  * 
- * @param string $toEmail   Recipient email address.
- * @param string $fromUser  Local-part for the From address.
- * @param string $subject   Email subject.
- * @param string $body      Email body content.
- * @return bool             Returns true if the email was successfully accepted for delivery, false otherwise.
+ * @param string $toEmail Recipient email address.
+ * @param string $fromUser Local-part for the From address.
+ * @param string $subject Email subject.
+ * @param string $body Email body content.
+ * @return bool Returns true if the email was successfully accepted for delivery, false otherwise.
  */
-function sendEmail(string $toEmail, string $fromUser, string $subject, string $body): bool {
+function sendIndividualEmail(string $toEmail, string $fromUser, string $subject, string $body): bool {
+    // Set the domain used for the From address (update for production if needed)
     $domain = 'jenniferp136.sg-host.com';
+
+    // Construct the full From address using the local-part and domain
     $fromAddress = "{$fromUser}@{$domain}";
 
+    // Set email headers (From only — can be expanded later)
     $headers = "From: {$fromAddress}\r\n";
 
+    // Validate recipient email before sending
     if (filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+        // Send the email using PHP's built-in mail() function
         return mail($toEmail, $subject, $body, $headers);
     } else {
+        // Return false if the email address is invalid
         return false;
     }
+}
+
+/**
+ * Notify the user that their Points Program form has been updated.
+ *
+ * Sends a confirmation email to the user whose form was updated,
+ * letting them know their submission was processed successfully.
+ *
+ * @param string $recipientEmail The email address of the user being notified.
+ * @param string $formEmail The email address associated with the updated form.
+ * @return bool True if the email was successfully sent, false otherwise.
+ */
+function notifyUserOfPointsUpdate(string $recipientEmail, string $formEmail): bool {
+    // Email subject
+    $subject = "Confirmation: Points Program Form Updated";
+
+    // Build the body of the email
+    $body  = "Dear User,\n\n";
+    $body .= "Your Points Program form associated with $formEmail has been successfully updated.\n\n";
+    $body .= "If you did not make this change, please contact fgpfamily.org.\n\n";
+    $body .= "Thank you,\nFGP Team";
+
+    // Send the email 
+    return sendIndividualEmail($recipientEmail, 'notifications', $subject, $body);
 }
 
 ?>
