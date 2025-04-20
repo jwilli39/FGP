@@ -88,11 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $lastName = getLastNameByEmail($email);
     
             // ===== PRODUCTION =====
-            // notifyUserOfPointsUpdate($email, $firstName, $lastName);
-            // notifyAdminsOfPointsUpdate($email, $firstName, $lastName);
-    
-            // ===== TEST CASE =====
-            notifyUserOfPointsUpdate($email, $firstName, $lastName);
+             notifyUserOfPointsUpdate($email, $firstName, $lastName);
             notifyAdminsOfPointsUpdate($email, $firstName, $lastName);
     
             // Redirect with success indicator

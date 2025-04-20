@@ -163,11 +163,11 @@ function notifyUserOfPointsUpdate(string $userEmail, string $firstName, string $
     $body .= "Thank you,\nFGP Team";
 
     // ===== TESTING ONLY =====
-    $testEmail = "jwilli39@mail.umw.edu";
-    return mail($testEmail, $subject, $body, "From: notifications@fgpfamily.org\r\n");
+    //$testEmail = "jwilli39@mail.umw.edu";
+    //return mail($testEmail, $subject, $body, "From: notifications@fgpfamily.org\r\n");
     // ===== END TESTING =====
 
-    // return sendIndividualEmail($userEmail, $subject, $body); // <--- uncomment after test
+    return sendIndividualEmail($userEmail, $subject, $body); // <--- uncomment after test
 }
 
 /**
@@ -191,11 +191,11 @@ function notifyAdminsOfPointsUpdate(string $userEmail, string $firstName, string
     $body .= "FGP System";
 
     // ===== TESTING ONLY =====
-    $testEmails = ["jwilli39@mail.umw.edu"]; 
-    return sendEmails($testEmails, 'notifications', $subject, $body);
+    //$testEmails = ["jwilli39@mail.umw.edu"]; 
+    //return sendEmails($testEmails, 'notifications', $subject, $body);
     // ===== END TESTING =====
 
-    // return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
+    return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
 }
 
 ?>
