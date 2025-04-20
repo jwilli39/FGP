@@ -146,16 +146,18 @@ function sendIndividualEmail(string $toEmail, string $subject, string $body): bo
 /**
  * Notify the user that their Points Program form has been updated.
  *
- * Sends a confirmation email to the user whose form was updated,
- * letting them know their submission was processed successfully.
+ * Sends a personalized confirmation email to the user whose form was updated,
+ * including their first and last name.
  *
- * @param string $userEmail The email address of the user being notified and whose form was updated.
+ * @param string $userEmail The user's email address.
+ * @param string $firstName The user's first name.
+ * @param string $lastName The user's last name.
  * @return bool True if the email was successfully sent, false otherwise.
  */
-function notifyUserOfPointsUpdate(string $userEmail): bool {
+function notifyUserOfPointsUpdate(string $userEmail, string $firstName, string $lastName): bool {
     $subject = "Confirmation: Points Program Form Updated";
 
-    $body  = "Dear User,\n\n";
+    $body  = "Dear {$firstName} {$lastName},\n\n";
     $body .= "Your Points Program form associated with $userEmail has been successfully updated.\n\n";
     $body .= "If you did not make this change, please contact fgpfamily.org.\n\n";
     $body .= "Thank you,\nFGP Team";
@@ -168,21 +170,23 @@ function notifyUserOfPointsUpdate(string $userEmail): bool {
     // return sendIndividualEmail($userEmail, $subject, $body); // <--- uncomment after test
 }
 
-
 /**
  * Notify all admins that a user's Points Program form has been updated.
  *
- * Sends a system-generated email to all admins informing them that
- * a specific user's Points Program form has been changed.
+ * Sends an email to all admins with the name and email of the user
+ * whose Points Program form was modified.
  *
- * @param string $userEmail The email address of the user whose form was updated.
- * @return array An array with email addresses as keys and boolean send statuses as values.
+ * @param string $userEmail The email address of the updated user.
+ * @param string $firstName The user's first name.
+ * @param string $lastName The user's last name.
+ * @return array An array of email addresses with send status as values.
  */
-function notifyAdminsOfPointsUpdate(string $userEmail): array {
+function notifyAdminsOfPointsUpdate(string $userEmail, string $firstName, string $lastName): array {
     $subject = "Points Program Form Updated";
 
-    $body  = "An update has been submitted for the Points Program form associated with:\n\n";
-    $body .= "User Email: $userEmail\n\n";
+    $body  = "An update has been submitted for the Points Program form.\n\n";
+    $body .= "User: {$firstName} {$lastName}\n";
+    $body .= "Email: {$userEmail}\n\n";
     $body .= "Please log in to the dashboard to review the changes.\n\n";
     $body .= "FGP System";
 
@@ -193,6 +197,5 @@ function notifyAdminsOfPointsUpdate(string $userEmail): array {
 
     // return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
 }
-
 
 ?>

@@ -83,12 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         if ($changed) {
             // ===== PRODUCTION =====
-            // notifyUserOfPointsUpdate($email);
-            // notifyAdminsOfPointsUpdate($email);
+            // notifyUserOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
+            // notifyAdminsOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
     
             // ===== TEST CASE =====
-            notifyUserOfPointsUpdate($email);
-            notifyAdminsOfPointsUpdate($email);
+            notifyUserOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
+            notifyAdminsOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
     
             // Redirect with success indicator
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=true";</script>';
