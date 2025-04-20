@@ -84,15 +84,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($changed) {
             // Retrieve person info
             require_once('database/dbPersons.php');
-            $person = retrieve_person($userID);
+            $firstName = getFirstNameByEmail($email);
+            $lastName = getLastNameByEmail($email);
     
             // ===== PRODUCTION =====
-            // notifyUserOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
-            // notifyAdminsOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
+            // notifyUserOfPointsUpdate($email, $firstName, $lastName);
+            // notifyAdminsOfPointsUpdate($email, $firstName, $lastName);
     
             // ===== TEST CASE =====
-            notifyUserOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
-            notifyAdminsOfPointsUpdate($email, $person->get_first_name(), $person->get_last_name());
+            notifyUserOfPointsUpdate($email, $firstName, $lastName);
+            notifyAdminsOfPointsUpdate($email, $firstName, $lastName);
     
             // Redirect with success indicator
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=true";</script>';
@@ -104,7 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once('pointsProgForm.php');
     }
     
-
 ?>
 <?php ob_end_flush(); ?>
 </body>
