@@ -192,3 +192,45 @@ function find_next_id() {
 
     return $row['max_id'];
 }
+
+/**
+ * Retrieves the first name of a user from dbPersons based on their email.
+ *
+ * @param string $email The user's email address.
+ * @return string|null The first name if found, or null if not.
+ */
+function getFirstNameByEmail(string $email): ?string {
+    $con = connect();
+    $email = mysqli_real_escape_string($con, $email);
+    $query = "SELECT first_name FROM dbPersons WHERE email = '$email' LIMIT 1";
+    $result = mysqli_query($con, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        mysqli_close($con);
+        return $row['first_name'];
+    }
+
+    mysqli_close($con);
+    return null;
+}
+
+/**
+ * Retrieves the last name of a user from dbPersons based on their email.
+ *
+ * @param string $email The user's email address.
+ * @return string|null The last name if found, or null if not.
+ */
+function getLastNameByEmail(string $email): ?string {
+    $con = connect();
+    $email = mysqli_real_escape_string($con, $email);
+    $query = "SELECT last_name FROM dbPersons WHERE email = '$email' LIMIT 1";
+    $result = mysqli_query($con, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        mysqli_close($con);
+        return $row['last_name'];
+    }
+
+    mysqli_close($con);
+    return null;
+}
