@@ -131,7 +131,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
  */
 function sendIndividualEmail(string $toEmail, string $fromUser, string $subject, string $body): bool {
     // Set the domain used for the From address (update for production if needed)
-    $domain = 'jenniferp136.sg-host.com';
+    $domain = 'notifications@fgpfamily.org';
 
     // Construct the full From address using the local-part and domain
     $fromAddress = "{$fromUser}@{$domain}";
