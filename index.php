@@ -34,7 +34,8 @@
     <main class='dashboard'>
     <?php if (isset($_GET['pointsProgSuccess']) && isset($_GET['pointsProgUpdated'])): ?>
             <?php if ($_GET['pointsProgUpdated'] === 'true'): ?>
-                <div class="happy-toast">Points Program Form updated successfully. A confirmation email has been sent to your inbox.</div>
+                <div class="happy-toast">Points Program Form updated successfully. A confirmation email has been sent to your inbox — 
+                    if you don’t see it, be sure to check your spam or junk folder just in case.</div>
             <?php else: ?>
                     <div class="happy-toast">Your Points Program Form was submitted, but no changes were detected from your previous submission.</div>
             <?php endif; ?>
