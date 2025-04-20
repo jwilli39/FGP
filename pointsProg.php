@@ -76,23 +76,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $afterUpdate = get_points_form($email);
     $changed = hasFormChanged($afterUpdate, $beforeUpdate);
 
-    echo "<pre>";
     echo "Form Changed: " . ($changed ? "Yes" : "No") . "\n\n";
-    echo "</pre>";
 
     if (!$result) {
-        echo '<p>Something went wrong.</p>';
+        echo '<p>We encountered an issue while processing your submission. Please try again later.</p>';
     } else {
         if ($changed) {
-            sendEmail('jwilli39@mail.umw.edu', 'notifications', 'Points Program Form Updated', "Updated email: $email");
+            // ===== PRODUCTION =====
+            // notifyUserOfPointsUpdate($email, $email);
+            // notifyAdminsOfPointsUpdate($email);
+
+            // ===== TEST CASE =====
+            notifyUserOfPointsUpdate($email, $email); // Test: sends to your email
+            notifyAdminsOfPointsUpdate($email);       // Test: sends to your email
+
+            // Redirect with success indicator
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=true";</script>';
         } else {
             echo '<script>document.location = "index.php?pointsProgSuccess=1&pointsProgUpdated=false";</script>';
         }
     }
-    } else {
-        require_once('pointsProgForm.php');
-    }
+} else {
+    require_once('pointsProgForm.php');
+}
     
 ?>
 <?php ob_end_flush(); ?>
