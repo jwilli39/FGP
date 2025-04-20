@@ -160,17 +160,36 @@ function sendIndividualEmail(string $toEmail, string $fromUser, string $subject,
  * @return bool True if the email was successfully sent, false otherwise.
  */
 function notifyUserOfPointsUpdate(string $recipientEmail, string $formEmail): bool {
-    // Email subject
     $subject = "Confirmation: Points Program Form Updated";
 
-    // Build the body of the email
     $body  = "Dear User,\n\n";
     $body .= "Your Points Program form associated with $formEmail has been successfully updated.\n\n";
     $body .= "If you did not make this change, please contact fgpfamily.org.\n\n";
     $body .= "Thank you,\nFGP Team";
 
-    // Send the email 
-    return sendIndividualEmail($recipientEmail, 'notifications', $subject, $body);
+    // ===== TESTING ONLY =====
+    $testEmail = "your@email.com"; // <--- replace with your test email
+    return mail($testEmail, $subject, $body, "From: notifications@fgpfamily.org\r\n");
+    // ===== END TESTING =====
+
+    // return sendIndividualEmail($recipientEmail, 'notifications', $subject, $body); // <--- uncomment after test
+}
+
+
+function notifyAdminsOfPointsUpdate(string $userEmail): array {
+    $subject = "Points Program Form Updated";
+
+    $body  = "An update has been submitted for the Points Program form associated with:\n\n";
+    $body .= "User Email: $userEmail\n\n";
+    $body .= "Please log in to the dashboard to review the changes.\n\n";
+    $body .= "FGP System";
+
+    // ===== TESTING ONLY =====
+    $testEmails = ["your@email.com"]; // <--- replace with your test email
+    return sendEmails($testEmails, 'notifications', $subject, $body);
+    // ===== END TESTING =====
+
+    // return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
 }
 
 ?>
