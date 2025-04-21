@@ -193,136 +193,44 @@ function find_next_id() {
     return $row['max_id'];
 }
 
-function renderFamilyDropdown() {
-    global $db, $_SESSION;
-
-    if ($_SESSION['access_level'] >= 2) {
-        $people = getall_families();
-
-        usort($people, function($a, $b) {
-            return strcasecmp($a->get_first_name() . $a->get_last_name(), $b->get_first_name() . $b->get_last_name());
-        });
-
-        echo '<select id="familyDropdown" name="family" onchange="fillForm()">';
-        echo '<option value="" data-name="" data-email="" data-address="" data-aaa-name="" data-aaa-dob="">Select a person</option>'; // Default option
-
-        foreach ($people as $person) {
-            if ($person->get_access_level() < $_SESSION['access_level']) {
-                // Fetch AAA membership details using the existing functions
-                $aaaName = retrieve_aaa_name_by_email($person->get_email());
-                $aaaDob = retrieve_aaa_dob_by_email($person->get_email());
-
-                echo "<option value='{$person->get_id()}'
-                    data-name='{$person->get_first_name()} {$person->get_last_name()}'
-                    data-email='{$person->get_email()}'
-                    data-address='{$person->get_address()}'
-                    data-aaa-name='{$aaaName}'
-                    data-aaa-dob='{$aaaDob}'>";
-                echo "{$person->get_first_name()} ({$person->get_last_name()}) -- {$person->get_email()}";
-                echo "</option>";
-            }
-        }
-        echo '</select>';
-    }
-}
-
-
-function autoFillPointsFormFamily($userID) {
-    global $db, $_SESSION;
-
-    if ($_SESSION['access_level'] == 1) {
-        $people = getall_families();
-
-        foreach ($people as $person) {
-            if ($person->get_email() == $userID) { // Match user by email
-                $fullName = "{$person->get_first_name()} {$person->get_last_name()}";
-                $email = $person->get_email();
-                $address = $person->get_address();
-
-                // Fetch AAA membership details
-                $aaaName = retrieve_aaa_name_by_email($email);
-                $aaaDob = retrieve_aaa_dob_by_email($email);
-
-                // Automatically set the values in the form
-                echo "<script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        document.getElementById('name').value = '" . addslashes($fullName) . "';
-                        document.getElementById('email').value = '" . addslashes($email) . "';
-                        document.getElementById('address').value = '" . addslashes($address) . "';
-                        document.getElementById('aaa_membership_name').value = '" . addslashes($aaaName) . "';
-                        document.getElementById('aaa_membership_dob').value = '" . addslashes($aaaDob) . "';
-
-                        // Check 'Already Have It' if AAA membership exists
-                        if ('" . addslashes($aaaName) . "' !== '') {
-                            document.getElementById('aaa_already_have_it').checked = true;
-                        }
-                    });
-                </script>";
-                return; // Stop after setting the first match
-            }
-        }
-    }
-}
-
-
-function retrieve_aaa_name_by_email($email) {
+/**
+ * Retrieves the first name of a user from dbPersons based on their email.
+ *
+ * @param string $email The user's email address.
+ * @return string|null The first name if found, or null if not.
+ */
+function getFirstNameByEmail(string $email): ?string {
     $con = connect();
-    if (!$con) return "";
-
     $email = mysqli_real_escape_string($con, $email);
-    $query = "SELECT AAA_membership_name FROM dbPointsProg WHERE email = '$email'";
+    $query = "SELECT first_name FROM dbPersons WHERE email = '$email' LIMIT 1";
     $result = mysqli_query($con, $query);
 
     if ($row = mysqli_fetch_assoc($result)) {
         mysqli_close($con);
-        return $row['AAA_membership_name'] ?? "";
+        return $row['first_name'];
     }
 
     mysqli_close($con);
-    return "";
+    return null;
 }
 
-function retrieve_aaa_dob_by_email($email) {
+/**
+ * Retrieves the last name of a user from dbPersons based on their email.
+ *
+ * @param string $email The user's email address.
+ * @return string|null The last name if found, or null if not.
+ */
+function getLastNameByEmail(string $email): ?string {
     $con = connect();
-    if (!$con) return "";
-
     $email = mysqli_real_escape_string($con, $email);
-    $query = "SELECT AAA_membership_dob FROM dbPointsProg WHERE email = '$email'";
+    $query = "SELECT last_name FROM dbPersons WHERE email = '$email' LIMIT 1";
     $result = mysqli_query($con, $query);
 
     if ($row = mysqli_fetch_assoc($result)) {
         mysqli_close($con);
-        return $row['AAA_membership_dob'] ?? "";
+        return $row['last_name'];
     }
 
     mysqli_close($con);
-    return "";
+    return null;
 }
-?>
-
-<script>
-function fillForm() {
-    var dropdown = document.getElementById("familyDropdown");
-    var selectedOption = dropdown.options[dropdown.selectedIndex];
-
-    // Fill personal info fields
-    document.getElementById("name").value = selectedOption.getAttribute("data-name") || "";
-    document.getElementById("email").value = selectedOption.getAttribute("data-email") || "";
-    document.getElementById("address").value = selectedOption.getAttribute("data-address") || "";
-
-    // Fill AAA Membership fields
-    var aaaName = selectedOption.getAttribute("data-aaa-name") || "";
-    var aaaDob = selectedOption.getAttribute("data-aaa-dob") || "";
-
-    document.getElementById("aaa_membership_name").value = aaaName;
-    document.getElementById("aaa_membership_dob").value = aaaDob;
-
-    // Automatically check "Already Have It" if an AAA membership exists
-    if (aaaName.trim() !== "") {
-        document.getElementById("aaa_already_have_it").checked = true;
-    }
-}
-</script>
-
-
-

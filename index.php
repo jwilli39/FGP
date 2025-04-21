@@ -32,29 +32,36 @@
     <?php require('header.php'); ?>
     <h1>Dashboard</h1>
     <main class='dashboard'>
-        <?php if (isset($_GET['pcSuccess'])): ?>
-        <div class="happy-toast">Password changed successfully!</div>
-        <?php elseif (isset($_GET['deleteService'])): ?>
-        <div class="happy-toast">Service successfully removed!</div>
-        <?php elseif (isset($_GET['serviceAdded'])): ?>
-        <div class="happy-toast">Service successfully added!</div>
-        <?php elseif (isset($_GET['animalRemoved'])): ?>
-        <div class="happy-toast">Animal successfully removed!</div>
-        <?php elseif (isset($_GET['locationAdded'])): ?>
-        <div class="happy-toast">Location successfully added!</div>
-        <?php elseif (isset($_GET['deleteLocation'])): ?>
-        <div class="happy-toast">Location successfully removed!</div>
-        <?php elseif (isset($_GET['registerSuccess'])): ?>
-        <div class="happy-toast">Family registered successfully!</div>
-        <?php elseif (isset($_GET['registerAdminSuccess'])): ?>
-        <div class="happy-toast">Admin registered successfully!</div>
-        <?php elseif (isset($_GET['modifyAdminSuccess'])): ?>
-        <div class="happy-toast">Admin modified successfully!</div>
-        <?php elseif (isset($_GET['pointsProgSuccess'])): ?>
+    <?php if (isset($_GET['pointsProgSuccess']) && isset($_GET['pointsProgUpdated'])): ?>
+            <?php if ($_GET['pointsProgUpdated'] === 'true'): ?>
+                <div class="happy-toast">Points Program Form updated successfully. A confirmation email has been sent to your inbox — 
+                    if you don’t see it, be sure to check your spam or junk folder just in case.</div>
+            <?php else: ?>
+                    <div class="happy-toast">Your Points Program Form was submitted, but no changes were detected from your previous submission.</div>
+            <?php endif; ?>
+    <?php elseif (isset($_GET['pointsProgSuccess'])): ?>
         <div class="happy-toast">Points Program Form submitted successfully!</div>
-        <?php elseif (isset($_GET['commCareSuccess'])): ?>
+    <?php elseif (isset($_GET['pcSuccess'])): ?>
+        <div class="happy-toast">Password changed successfully!</div>
+    <?php elseif (isset($_GET['deleteService'])): ?>
+        <div class="happy-toast">Service successfully removed!</div>
+    <?php elseif (isset($_GET['serviceAdded'])): ?>
+        <div class="happy-toast">Service successfully added!</div>
+    <?php elseif (isset($_GET['animalRemoved'])): ?>
+        <div class="happy-toast">Animal successfully removed!</div>
+    <?php elseif (isset($_GET['locationAdded'])): ?>
+        <div class="happy-toast">Location successfully added!</div>
+    <?php elseif (isset($_GET['deleteLocation'])): ?>
+        <div class="happy-toast">Location successfully removed!</div>
+    <?php elseif (isset($_GET['registerSuccess'])): ?>
+        <div class="happy-toast">Family registered successfully!</div>
+    <?php elseif (isset($_GET['registerAdminSuccess'])): ?>
+        <div class="happy-toast">Admin registered successfully!</div>
+    <?php elseif (isset($_GET['modifyAdminSuccess'])): ?>
+        <div class="happy-toast">Admin modified successfully!</div>
+    <?php elseif (isset($_GET['commCareSuccess'])): ?>
         <div class="happy-toast">Community Care Package Form submitted successfully!</div>
-        <?php endif ?>
+    <?php endif; ?>
         <p>Welcome back, <?php echo $person->get_first_name() ?>!</p>
         <p>Today is <?php echo date('l, F j, Y'); ?>.</p>
         <div id="dashboard">
