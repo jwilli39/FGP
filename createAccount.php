@@ -216,6 +216,8 @@
             }else{
                 $how_did_you_hear="";
             }
+
+            $ccp_sponsor_fgp = isset($args['ccp_sponsor_fgp']) ? $args['ccp_sponsor_fgp'] : "";
             
             if($args['address2']){
                 $address=$address.", ".$args['address2'];
@@ -254,7 +256,7 @@
             //how did they hear, general family info, lead volunteer, GC delivery method, location
             $how_did_you_hear,$family_info,null,null,null,
             //remission trans date,remission end date, remembrance date
-            null, null, null
+            null, null, null, $ccp_sponsor_fgp
             );
             $result = add_person($newperson);
             if (!$result) {
