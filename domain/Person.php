@@ -105,7 +105,7 @@ class Person {
 	private $remission_trans_date;
 	private $remission_end_date;
 	private $remembrance_date;
-	
+	private $ccp_sponsor_fgp;
 
 	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, 
 			//$ts, $comp, $cam, $tran, 
@@ -125,7 +125,7 @@ class Person {
 			$housecleaning,$lawncare,$photography, $gas,$grocery,$aaaInterest,
 			$socialEvents,$houseProjects,$how_did_you_hear,$familyInfo,
 			$leadVolunteer,$gift_card_delivery_method,$location,
-			$remission_trans_date, $remission_end_date, $remembrance_date
+			$remission_trans_date, $remission_end_date, $remembrance_date, $ccp_sponsor_fgp
 			) {
 		$this->id = $e;
 		$this->start_date = $sd;
@@ -225,6 +225,7 @@ class Person {
 		$this->remission_trans_date=$remission_trans_date;
 		$this->remission_end_date=$remission_end_date;
 		$this->remembrance_date=$remembrance_date;
+		$this->ccp_sponsor_fgp = $ccp_sponsor_fgp;
 	}
 
 	function get_id() {
@@ -581,8 +582,10 @@ class Person {
         $this->gift_card_delivery_method = $gift_card_delivery_method;
     }
 
-
-
+	function get_ccp_sponsor_fgp() {
+		return $this->ccp_sponsor_fgp;
+	}
+	
 	// Function to update a person in the database
 function update_person($person) {
     $con = connect(); // Assuming connect() is a function to establish a database connection

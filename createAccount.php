@@ -52,11 +52,16 @@
             $ignoreList = array('password');
             $args = sanitize($_POST, $ignoreList);
 
+            //echo '<pre>'; print_r($args); echo '</pre>'; exit;
+
+
+            $services = isset($args['services']) ? $args['services'] : [];
+            //$permission_to_confirm = isset($args['permission_to_confirm']) ? $args['permission_to_confirm'] : "";
 
             //required fields
             $required = array('econtact-name','cmethod','phone','email',
                 'address', 'city', 'state', 'zip', 'first-name', 'last-name', 'birthdate',
-                'diagnosis','diagnosis_date','hospital','permission_to_confirm',
+                'diagnosis','diagnosis_date','hospital',
                 'agreement'
             );
 
@@ -123,7 +128,7 @@
             $agreement=$args['agreement'];
             
             $diagnosis=$args['diagnosis'];
-            $permission_to_confirm=$args['permission_to_confirm'];
+            $permission_to_confirm = isset($args['permission_to_confirm']) ? $args['permission_to_confirm'] : "";
            
             //set services options all to 0 so the variables are initialized 
             $meals=0;
@@ -183,19 +188,8 @@
             'family_info','how_did_you_hear','address2');
 
             //if field was set, set variable to input, otherwise set variable to empty string
-            if($args['allergies']){
-                $allergies=$args['allergies'];
-            }
-            else{
-                $allergies="";
-            }
-
-            if($args['sibling_info']){
-                $sibling_info=$args['sibling_info'];
-            }
-            else{
-                $sibling_info="";
-            }
+            $allergies = isset($args['allergies']) ? $args['allergies'] : "";
+            $sibling_info = isset($args['sibling_info']) ? $args['sibling_info'] : "";
 
             if($args['can_share_contact_info']){
                 $can_share_contact_info=$args['can_share_contact_info'];
@@ -216,6 +210,8 @@
             }else{
                 $how_did_you_hear="";
             }
+
+            $ccp_sponsor_fgp = isset($args['ccp_sponsor_fgp']) ? $args['ccp_sponsor_fgp'] : "";
             
             if($args['address2']){
                 $address=$address.", ".$args['address2'];
@@ -224,37 +220,76 @@
 
             //create statement for person object
             $newperson = new Person(
-            //first, last venue
-		    $first, $last, 'portland', 
-            //address, city state, zip code, profile picture
-            $address, $city, $state, $zipcode, "",
-            //phone1, phone type, phone 2, phonetype 2, email
-            $phone, 'cell', null, null, $email, 
-            //contact name, contact number, contact relation
-		    $econtactName, null, null, 
-            //ct=contact when, type=t, status = st, ct=contact method 
-            null, 'Family', 'Pending', $cmethod, 
-            //availability array, schedule array, hours array
-		    '', '', '', 
-            //bd=date of birth, sd=start date, notes password
-            $dateOfBirth, null, null, $password,
-            //all the availability variables
-            null,null,null,null,
-            null,null,null,null,
-            null,null,null,null,
-            //avail, avail, must change password, gender, diagnosis
-            null,null, 0, null,$diagnosis,
-            $diagnosis_date,$hospital,$permission_to_confirm, 
-            $expected_treatment_end_date,
-            //$services_interested_in, 
-            $allergies,$sibling_info,$can_share_contact_info,
-            substr($first, 0,1).$last //username
-            ,$meals, $housecleaning, $lawncare,$profphotos,
-            $gas,$grocery,$aaaInterest,$socialEvents, $houseProjects,
-            //how did they hear, general family info, lead volunteer, GC delivery method, location
-            $how_did_you_hear,$family_info,null,null,null,
-            //remission trans date,remission end date, remembrance date
-            null, null, null
+                $first,                  // 1
+                $last,                   // 2
+                'portland',              // 3
+                $address,                // 4
+                $city,                   // 5
+                $state,                  // 6
+                $zipcode,                // 7
+                "",                      // 8 - profile_pic
+                $phone,                  // 9
+                'cell',                  // 10
+                null,                    // 11 - phone2
+                null,                    // 12 - phone2type
+                $email,                  // 13
+                $econtactName,           // 14
+                null,                    // 15 - contact_num
+                null,                    // 16 - relation
+                null,                    // 17 - contact_time
+                'Family',                // 18 - type
+                'Pending',               // 19 - status
+                $cmethod,                // 20 - cMethod
+                '',                      // 21 - availability
+                '',                      // 22 - schedule
+                '',                      // 23 - hours
+                $dateOfBirth,            // 24 - birthday
+                null,                    // 25 - start_date
+                null,                    // 26 - notes
+                $password,               // 27 - password
+                null,                    // 28 - sundaysStart
+                null,                    // 29 - sundaysEnd
+                null,                    // 30 - mondaysStart
+                null,                    // 31 - mondaysEnd
+                null,                    // 32 - tuesdaysStart
+                null,                    // 33 - tuesdaysEnd
+                null,                    // 34 - wednesdaysStart
+                null,                    // 35 - wednesdaysEnd
+                null,                    // 36 - thursdaysStart
+                null,                    // 37 - thursdaysEnd
+                null,                    // 38 - fridaysStart
+                null,                    // 39 - fridaysEnd
+                null,                    // 40 - saturdaysStart
+                null,                    // 41 - saturdaysEnd
+                0,                       // 42 - mustChangePassword
+                null,                    // 43 - gender
+                $diagnosis,              // 44
+                $diagnosis_date,         // 45
+                $hospital,               // 46
+                $permission_to_confirm,  // 47
+                $expected_treatment_end_date, // 48
+                $allergies,              // 49
+                $sibling_info,           // 50
+                $can_share_contact_info, // 51
+                substr($first, 0,1).$last, // 52 - username
+                $meals,                  // 53
+                $housecleaning,          // 54
+                $lawncare,               // 55
+                $profphotos,             // 56 - NOT $photography
+                $gas,                    // 57
+                $grocery,                // 58
+                $aaaInterest,            // 59
+                $socialEvents,           // 60
+                $houseProjects,          // 61
+                $how_did_you_hear,       // 62
+                $family_info,            // 63
+                null,                    // 64 - leadVolunteer
+                null,                    // 65 - gift_card_delivery_method
+                null,                    // 66 - location
+                null,                    // 67 - remission_trans_date
+                null,                    // 68 - remission_end_date
+                null,                    // 69 - remembrance_date
+                $ccp_sponsor_fgp         // 70 ccp sponsor
             );
             $result = add_person($newperson);
             if (!$result) {
