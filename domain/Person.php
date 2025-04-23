@@ -582,8 +582,10 @@ class Person {
         $this->gift_card_delivery_method = $gift_card_delivery_method;
     }
 
-
-
+	function get_ccp_sponsor_fgp() {
+		return $this->ccp_sponsor_fgp;
+	}
+	
 	// Function to update a person in the database
 function update_person($person) {
     $con = connect(); // Assuming connect() is a function to establish a database connection
