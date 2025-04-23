@@ -105,7 +105,7 @@ class Person {
 	private $remission_trans_date;
 	private $remission_end_date;
 	private $remembrance_date;
-	
+	private $ccp_sponsor_fgp;
 
 	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, 
 			//$ts, $comp, $cam, $tran, 
