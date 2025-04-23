@@ -1,0 +1,2 @@
+ALTER TABLE dbpersons
+ADD COLUMN ccp_sponsor_fgp TINYINT(1) NOT NULL DEFAULT 0;
