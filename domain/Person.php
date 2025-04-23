@@ -125,7 +125,7 @@ class Person {
 			$housecleaning,$lawncare,$photography, $gas,$grocery,$aaaInterest,
 			$socialEvents,$houseProjects,$how_did_you_hear,$familyInfo,
 			$leadVolunteer,$gift_card_delivery_method,$location,
-			$remission_trans_date, $remission_end_date, $remembrance_date
+			$remission_trans_date, $remission_end_date, $remembrance_date, $ccp_sponsor_fgp
 			) {
 		$this->id = $e;
 		$this->start_date = $sd;
@@ -225,6 +225,7 @@ class Person {
 		$this->remission_trans_date=$remission_trans_date;
 		$this->remission_end_date=$remission_end_date;
 		$this->remembrance_date=$remembrance_date;
+		$this->ccp_sponsor_fgp = $ccp_sponsor_fgp;
 	}
 
 	function get_id() {
