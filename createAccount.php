@@ -3,7 +3,6 @@
     session_cache_expire(30);
     session_start();
     
-    
     require_once('include/input-validation.php');
 
     $loggedIn = false;

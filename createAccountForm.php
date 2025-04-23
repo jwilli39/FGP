@@ -48,11 +48,17 @@ function buildSelect($name, $disabled=false, $selected=null) {
 <main class="family-account-form">
     <form class="family-account-form" method="post">
         <h2>Become an FGP Family</h2>
-        <p>We provide support to families with a child in treatment for pediatric cancer. We require a confirmation of treatment filled out by an oncologist to confirm the
-             diagnosis which will be sent to you within the next 24 hours. Please fill out this form to give us an idea of what type of support your family needs. 
-             If we provide support in your area, we will let you know next steps. We are accepting applications for families in Planning District 16 (Stafford, 
-             Spotsylvania, Caroline, King George Counties and Fredericksburg City) and the Northern Neck. This application does not guarantee services!</p>
-        <p>An asterisk (<em><FONT COLOR=#ff0000>*</FONT></em>) indicates a required field.</p>
+        <p>We provide support to families with a child in treatment for pediatric cancer. We require a confirmation of
+            treatment filled out by an oncologist to confirm the
+            diagnosis which will be sent to you within the next 24 hours. Please fill out this form to give us an idea
+            of what type of support your family needs.
+            If we provide support in your area, we will let you know next steps. We are accepting applications for
+            families in Planning District 16 (Stafford,
+            Spotsylvania, Caroline, King George Counties and Fredericksburg City) and the Northern Neck. This
+            application does not guarantee services!</p>
+        <p>An asterisk (<em>
+                <FONT COLOR=#ff0000>*</FONT>
+            </em>) indicates a required field.</p>
         <fieldset>
             <!--<legend>Personal Information</legend>-->
             <label for="econtact-name">Who is the best person to contact to set up services?</label>
@@ -67,8 +73,9 @@ function buildSelect($name, $disabled=false, $selected=null) {
             </select>
 
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555">
-           
+            <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required
+                placeholder="Ex. (555) 555-5555">
+
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required placeholder="">
 
@@ -82,14 +89,15 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="city" name="city" required placeholder="Enter your city">
 
             <label for="state">State</label>
-            
+
             <select id="state" name="state" required>
                 <option value="VA" selected>Virginia</option>
             </select>
 
             <label for="zip">Zip Code</label>
-            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
-        
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required
+                placeholder="Enter your 5-digit zip code">
+
             <label for="first-name">Child's First Name</label>
             <input type="text" id="first-name" name="first-name" required placeholder="">
 
@@ -97,7 +105,8 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="last-name" name="last-name" required placeholder="">
 
             <label for="birthdate">Child's Birthdate</label>
-            <input type="date" id="birthdate" name="birthdate" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">
+            <input type="date" id="birthdate" name="birthdate" required placeholder="Choose your birthday"
+                max="<?php echo date('Y-m-d'); ?>">
 
             <label for="diagnosis">Child's Diagnosis</label>
             <input type="text" id="diagnosis" name="diagnosis" required placeholder="Your answer">
@@ -105,24 +114,33 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="diagnosis_date">Date of Diagnosis</label>
             <input type="date" id="diagnosis_date" name="diagnosis_date" required placeholder="Your answer">
 
-            <label for="hospital">Where is your child receiving treatment? please include name of oncologist or contact at hospital</label>
+            <label for="hospital">Where is your child receiving treatment? please include name of oncologist or contact
+                at hospital</label>
             <input type="text" id="hospital" name="hospital" required placeholder="Your answer">
 
-            <label>Do we have permission to reach out to the above mentioned on your behalf to confirm treament?</label>
+            <label>Do you have a CCP Sponsor/FGP Connection?</label>
             <div class="radio-group">
-                <input type="radio" id="permission-yes" name="permission_to_confirm" value="Yes" required><label for="permission-yes">Yes</label>
-                <input type="radio" id="permission-no" name="permission_to_confirm" value="No" required><label for="permission-no">No</label>
+                <input type="radio" id="ccp-sponsor-yes" name="ccp_sponsor_fgp" value="Yes">
+                <label for="ccp-sponsor-yes">Yes</label>
+
+                <input type="radio" id="ccp-sponsor-no" name="ccp_sponsor_fgp" value="No">
+                <label for="ccp-sponsor-no">No</label>
             </div>
 
             <label for="expected_treatment_end_date">What is the expected date of treatment completion?</label>
-            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date" placeholder="Your answer">
+            <input type="date" id="expected_treatment_end_date" name="expected_treatment_end_date"
+                placeholder="Your answer">
 
-            <label><em>* </em>Do we have permission to share your name and contact information with our service providers and partners?</label>
-            <p> We will share your information with lawn service, Moms in Motion (provide assistance with the medicaid waiver which serves as a secondary insurance),
-                 cleaners, and YMCA (you receive a membership through them). </p>
+            <label><em>* </em>Do we have permission to share your name and contact information with our service
+                providers and partners?</label>
+            <p> We will share your information with lawn service, Moms in Motion (provide assistance with the medicaid
+                waiver which serves as a secondary insurance),
+                cleaners, and YMCA (you receive a membership through them). </p>
             <div class="radio-group">
-                <input type="radio" id="permission-yes" name="can_share_contact_info" value="Yes"><label for="permission-yes">Yes</label>
-                <input type="radio" id="permission-no" name="can_share_contact_info" value="No" ><label for="permission-no">No</label>
+                <input type="radio" id="permission-yes" name="can_share_contact_info" value="Yes"><label
+                    for="permission-yes">Yes</label>
+                <input type="radio" id="permission-no" name="can_share_contact_info" value="No"><label
+                    for="permission-no">No</label>
                 <!--<p> need to add pop up question if other is selected </p>-->
             </div>
 
@@ -132,19 +150,24 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="how_did_you_hear">How did you hear about FGP?</label>
             <input type="text" id="how_did_you_hear" name="how_did_you_hear" placeholder="Your answer">
 
-            <label for="agreement">In consideration of Fairy Godmother Project allowing Volunteer to act as an official “Fairy Godmother Project” volunteer,
-            Family voluntarily waives any and all rights to recovery from Fairy Godmother Project, its representatives, agents, officers, directors, shareholders, employees,
-            insurers, attorneys, successors and assigns, for all claims, demands, damages, actions, costs, expenses, actions, causes of action, suits at law or in equity for injuries,
-            damage, or other loss to person or property that Family and any other individual or entity claiming by or through Family, may sustain while receiving services as part 
-            of the Fairy Godmother Project. The parties agree that electronic signatures will be permitted under the provisions of the Virginia Uniform
-            Electronic Transactions Act, Va. Code § 59.1-479 et seq.</label>
+            <label for="agreement">In consideration of Fairy Godmother Project allowing Volunteer to act as an official
+                “Fairy Godmother Project” volunteer,
+                Family voluntarily waives any and all rights to recovery from Fairy Godmother Project, its
+                representatives, agents, officers, directors, shareholders, employees,
+                insurers, attorneys, successors and assigns, for all claims, demands, damages, actions, costs, expenses,
+                actions, causes of action, suits at law or in equity for injuries,
+                damage, or other loss to person or property that Family and any other individual or entity claiming by
+                or through Family, may sustain while receiving services as part
+                of the Fairy Godmother Project. The parties agree that electronic signatures will be permitted under the
+                provisions of the Virginia Uniform
+                Electronic Transactions Act, Va. Code § 59.1-479 et seq.</label>
             <input type="text" id="agreement" name="agreement" required placeholder="Name (First and Last)">
-        
+
         </fieldset>
-        
+
         <input type="submit" name="registration-form" value="Submit">
     </form>
     <?php if ($loggedIn): ?>
-        <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+    <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
     <?php endif ?>
 </main>
