@@ -102,7 +102,8 @@ function add_person($person) {
             $person->get_location() . '","' .
             $person->get_remission_trans_date() . '","' .
             $person->get_remission_end_date() . '","' .
-            $person->get_remembrance_date().
+            $person->get_remembrance_date(). '","' . 
+            $person->get_ccp_sponsor_fgp() .
             '");'
 
         );							
