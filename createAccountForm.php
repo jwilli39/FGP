@@ -118,7 +118,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 at hospital</label>
             <input type="text" id="hospital" name="hospital" required placeholder="Your answer">
 
-            <label>Do you have a CCP Sponsor/FGP Connection?</label>
+            <label>Permission to have a CCP Sponsor/FGP Connection?</label>
             <div class="radio-group">
                 <input type="radio" id="ccp-sponsor-yes" name="ccp_sponsor_fgp" value="Yes">
                 <label for="ccp-sponsor-yes">Yes</label>
