@@ -408,7 +408,8 @@ function make_a_person($result_row) {
                     $result_row['location'],
                     $result_row['remission_trans_date'],
                     $result_row['remission_end_date'],
-                    $result_row['remembrance_date']
+                    $result_row['remembrance_date'],
+                    $result_row['ccp_sponsor_fgp']
                 );   
     return $thePerson;
 }
