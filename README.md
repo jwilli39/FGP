@@ -1,16 +1,23 @@
+## fgpfamily.org | Volunteer & Family Support Platform
 
+This repository was cloned and updated as part of CPSC 491 at the University of Mary Washington. The current phase of the project focuses on performing maintenance, refactoring, and feature improvements to the existing codebase originally developed for the Fairy Godmother Project.
 
+The original repository can be found here: https://github.com/harmonyrose/FGP
 
-# Old Dominion Humane Society (ODHS) Medicine Tracker
+All recent contributions made during this phase are documented through commit history and update logs.
 
+Contributors
 
-Contributer: Gabe Carlton
-Contributer: Harmony Peura
-Contributor: Grayson Jones
-Contributor: Eric Bae
-Contributor: Joshua Cottrell
-Contributor: Aelliana Seidenstein
+Original Contributors:
+Gabe Carlton
+Harmony Peura
+Grayson Jones
+Eric Bae
+Joshua Cottrell
+Aelliana Seidenstein
 
+Recent Contributor (Spring 2025, CPSC 491 – UMW):
+Josh Williams
 
 ## Purpose
 This project is the result of a semesters' worth of collaboration among UMW students. The goal of the project was to create a web application that the Old Dominion Humane Society organization could utilize to make it easier to manage animals and the medicines/medical treatments/vaccines that these animals recieve at the ODHS. At-a-glance features include a web-based calendar of events, event sign up, volunteer registration & login system, reporting system, basic notification system, animal registration/archiving/report generation, and location and service creation.
