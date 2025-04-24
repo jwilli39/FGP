@@ -54,6 +54,11 @@
                 $badLogin = true;
             }
             else if($password==$user->get_password()){
+                if (strtolower($user->get_status()) === 'rejected') {
+                    $badLogin = true;
+                    header('Location: login.php?rejected');
+                    exit();
+                }
                 $changePassword = false;
                 if ($user->is_password_change_required()) {
                     $changePassword = true;
@@ -99,39 +104,43 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <?php require_once('universal.inc') ?>
-        <title>FGP | Log In</title>
-    </head>
-    <body>
-        <?php require_once('header.php') ?>
-        <main class="login">
-            <h1>FGP Login</h1>
-            <?php if (isset($_GET['registerSuccess'])): ?>
-                <div class="happy-toast">
-                    Your registration was successful! Please log in below. Your username is your child's first initial followed by
-                    their last name (i.e Jane Smith would be JSmith) and your password is your child's date of birth in YYYY-MM-DD format.
-                    </div>
-            <?php elseif (isset($_GET['badUsername'])): ?>
-                <div class="error-toast">Username is incorrect.</div>
-            <?php else: ?>
-            <p>Welcome! Please log in below.</p>
-            <?php endif ?>
-            <form method="post">
-                <?php
+
+<head>
+    <?php require_once('universal.inc') ?>
+    <title>FGP | Log In</title>
+</head>
+
+<body>
+    <?php require_once('header.php') ?>
+    <main class="login">
+        <h1>FGP Login</h1>
+        <?php if (isset($_GET['registerSuccess'])): ?>
+        <div class="happy-toast">
+            Your registration was successful! Please log in below...
+        </div>
+        <?php elseif (isset($_GET['badUsername'])): ?>
+        <div class="error-toast">Username is incorrect.</div>
+        <?php elseif (isset($_GET['rejected'])): ?>
+        <div class="error-toast">Your account has been rejected. Please contact support for more information.</div>
+        <?php else: ?>
+        <p>Welcome! Please log in below.</p>
+        <?php endif ?>
+        <form method="post">
+            <?php
                     if ($badLogin) {
                         echo '<span class="error">No login with that username and password combination currently exists.</span>';
                     }
                 ?>
-                <label for="username">Username</label>
-        		<input type="text" name="username" placeholder="Enter your username" required>
-        		<label for="password">Password</label>
-                <input type="password" name="password" placeholder="Enter your password" required>
-                <input type="submit" name="login" value="Log in">
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="Enter your username" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <input type="submit" name="login" value="Log in">
 
-            </form>
-            <p></p>
-            <p>Looking for <a href="https://www.fgpinfo.org/">Fairy Godmother Project</a>?</p>
-        </main>
-    </body>
+        </form>
+        <p></p>
+        <p>Looking for <a href="https://www.fgpinfo.org/">Fairy Godmother Project</a>?</p>
+    </main>
+</body>
+
 </html>

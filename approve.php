@@ -11,12 +11,30 @@ require_once('database/dbPersons.php');
 if (isset($_POST['approve'])) {
     $id = $_POST['id']; // Family ID
     update_status($id, 'Active'); // Set status to 'Active'
-    //header("Location: familyServiceDoc.php?id=$id"); // Redirect to familyServiceDoc.php after approving
     echo "<script>document.location = 'familyServiceDoc.php?id=".$id."';</script>";
     exit; // Stop further execution
 } elseif (isset($_POST['reject'])) {
     $id = $_POST['id']; // Family ID
     update_status($id, 'Rejected'); // Set status to 'Rejected'
+
+    require_once('email.php');
+
+    // Fetch the person's information
+    $person = retrieve_person($id);
+
+    // Send rejection email to the family
+    notifyFamilyOfRejection(
+        $person->get_email(),
+        $person->get_first_name(),
+        $person->get_last_name()
+    );
+
+    // Notify admins about the rejection
+    notifyAdminsOfRejection(
+        $person->get_email(),
+        $person->get_first_name(),
+        $person->get_last_name()
+    );
 }
 // Query to fetch all families from the database
 $con=connect();
