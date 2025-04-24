@@ -9,11 +9,11 @@ All recent contributions made during this phase are documented through commit hi
 Contributors
 
 Original Contributors:
-Gabe Carlton
-Harmony Peura
-Grayson Jones
-Eric Bae
-Joshua Cottrell
+Gabe Carlton,
+Harmony Peura,
+Grayson Jones,
+Eric Bae,
+Joshua Cottrell,
 Aelliana Seidenstein
 
 Recent Contributor (Spring 2025, CPSC 491 – UMW):
