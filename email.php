@@ -198,4 +198,51 @@ function notifyAdminsOfPointsUpdate(string $userEmail, string $firstName, string
     return emailAdmin('notifications', $subject, $body); // <--- uncomment after test
 }
 
+/**
+ * Notify a family that their application has been rejected.
+ *
+ * @param string $userEmail The family's email address.
+ * @param string $firstName The family's first name.
+ * @param string $lastName The family's last name.
+ * @return bool True if the email was successfully sent, false otherwise.
+ */
+function notifyFamilyOfRejection(string $userEmail, string $firstName, string $lastName): bool {
+    $subject = "FGP Application Status Update";
+
+    $body  = "Dear {$firstName} {$lastName},\n\n";
+    $body .= "Thank you for your interest in the Fairy Godmother Project.\n\n";
+    $body .= "After reviewing your application, we regret to inform you that you are not eligible for services at this time.\n\n";
+    $body .= "If you have any questions or believe this decision was made in error, please contact us at support@fgpfamily.org.\n\n";
+    $body .= "Sincerely,\nThe FGP Team";
+
+    return sendIndividualEmail($userEmail, $subject, $body);
+}
+
+/**
+ * Notify all admins when a family application is rejected.
+ *
+ * @param string $userEmail The rejected user's email address.
+ * @param string $firstName The user's first name.
+ * @param string $lastName The user's last name.
+ * @return array An array of email addresses with send status as values.
+ */
+function notifyAdminsOfRejection(string $userEmail, string $firstName, string $lastName): array {
+    $subject = "FGP Application Rejected";
+
+    $body  = "An application has been marked as Rejected.\n\n";
+    $body .= "Family: {$firstName} {$lastName}\n";
+    $body .= "Email: {$userEmail}\n\n";
+    $body .= "Please review their profile for further information.\n\n";
+    $body .= "FGP System";
+
+    return emailAdmin('notifications', $subject, $body);
+}
+
+
+
+
+
+
+
+
 ?>
